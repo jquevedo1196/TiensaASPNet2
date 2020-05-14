@@ -1,0 +1,33 @@
+﻿@model List<CatArticulo>
+@{
+    ViewData["Title"] = "Proyecto de BD 'Tienda'";
+}
+
+<h2>Catálogo de Artículos</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre del Artículo</th>
+            <th scope="col">Marca</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var catArticulo in @Model)
+        {
+            <tr>
+                <th scope="row">@catArticulo.ArtId</th>
+                <td>@catArticulo.ArtNombre</td>
+                <td>@ViewBag.Context.Marcas.Find(@ViewBag.Context.CatArticulos.Find(@catArticulo.ArtId).MarcaId).VcMarcaName</td>
+                <td><a href="~/../CatArticulo/EditarCatArticulo/@catArticulo.ArtId">Editar</a></td>
+                <td><a href="~/../CatArticulo/BorrarCatArticulo/@catArticulo.ArtId">Eliminar</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a href="~/../CatArticulo/CrearCatArticulo/">Agregar artículo al catálogo</a>
+</div>

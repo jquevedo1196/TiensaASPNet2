@@ -1,0 +1,39 @@
+﻿@model Empresa
+
+@{
+    ViewData["Title"] = "Proyecto de BD 'Tienda'";
+}
+
+<h2>Edición de la Empresa: @Model.EmpresaRazSoc</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <label asp-for="EmpresaRazSoc" class="form-control">Razón social</label>
+        <input type="text" asp-for="EmpresaRazSoc" value="@Model.EmpresaRazSoc">
+    </div>
+    <di class="form-group">
+        <label asp-for="EmpresaCalle" class="form-control">Calle</label>
+        <input type="text" asp-for="EmpresaCalle" value="@Model.EmpresaCalle">
+    </di>
+    <div class="form-group">
+        <label asp-for="EmpresaNumInt" class="form-control">Número interior</label>
+        <input type="text" asp-for="EmpresaNumInt" value="@Model.EmpresaNumInt">
+    </div>
+    <div class="form-group">
+        <label asp-for="EmpresaNumExt" class="form-control">Número exterior</label>
+        <input type="text" asp-for="EmpresaNumExt" value="@Model.EmpresaNumExt">
+    </div>
+    <div class="form-group">
+        <label asp-for="EmpresaCp" class="form-control">Código postál</label>
+        <input type="text" asp-for="EmpresaCp" value="@Model.EmpresaCp">
+    </div>
+    <div class="form-group">
+        <label asp-for="EmpresaCd" class="form-control">Ciudad</label>
+        <input type="text" asp-for="EmpresaCd" value="@Model.EmpresaCd">
+    </div>
+    <div class="form-group">
+        <label asp-for="EmpresaEdo" class="form-control">Estado</label>
+        <input type="text" asp-for="EmpresaEdo" value="@Model.EmpresaEdo">
+    </div>
+    <input type="submit"/>
+</form>

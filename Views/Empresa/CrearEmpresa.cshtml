@@ -1,0 +1,43 @@
+﻿@model Empresa
+
+@{
+    ViewData["Title"] = "Proyecto de BD 'Tienda'";
+}
+
+<h2>Nueva Empresa</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <label asp-for="EmpresaRfc" class="form-control">RFC</label>
+        <input type="text" asp-for="EmpresaRfc">
+    </div>
+    <div class="form-group">
+        <label asp-for="EmpresaRazSoc" class="form-control">Razón Social</label>
+        <input type="text" asp-for="EmpresaRazSoc">
+    </div>
+    <div class="form-group">
+        <label asp-for="EmpresaCalle" class="form-control">Calle</label>
+        <input type="text" asp-for="EmpresaCalle">
+    </div>
+    <div class="form-group">
+        <label asp-for="EmpresaNumInt" class="form-control">Número interior</label>
+        <input type="text" asp-for="EmpresaNumInt">
+    </div>
+    <div class="form-group">
+        <label asp-for="EmpresaNumExt" class="form-control">Número exterior</label>
+        <input type="text" asp-for="EmpresaNumExt">
+    </div>
+    <div class="form-group">
+        <label asp-for="EmpresaCp" class="form-control">Código Postal</label>
+        <input type="text" asp-for="EmpresaCp">
+    </div>
+    <div class="form-group">
+        <label asp-for="EmpresaCd" class="form-control">Ciudad</label>
+        <input type="text" asp-for="EmpresaCd">
+    </div>
+    <div class="form-group">
+        <label asp-for="EmpresaEdo" class="form-control">Estado</label>
+        <input type="text" asp-for="EmpresaEdo">
+    </div>
+    <input type="submit"/>
+</form>
