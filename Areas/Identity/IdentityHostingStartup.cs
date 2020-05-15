@@ -20,8 +20,12 @@ namespace tienda_web.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("tienda_webAuthDbContextConnection")));
 
-                services.AddDefaultIdentity<tienda_webUsers>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<tienda_webAuthDbContext>();
+                services.AddDefaultIdentity<tienda_webUsers>(options => {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                }).AddEntityFrameworkStores<tienda_webAuthDbContext>();
             });
         }
     }

@@ -47,19 +47,38 @@ namespace tienda_web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
+            [DataType(DataType.Text)]
+            [Display(Name = "Nombre")]
+            public string Nombres { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Apellido Paterno")]
+            public string ApPat { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Apellido Materno")]
+            public string ApMat { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Nombre de usuario")]
+            public string UserName { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Registro Federal de Contribuyente (RFC)")]
+            public string RFC { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Contraseña")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Repita la contraseña")]
+            [Compare("Password", ErrorMessage = "La contraseña no coincide!")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -75,9 +94,9 @@ namespace tienda_web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new tienda_webUsers { UserName = Input.Email, Email = Input.Email };
+                var user = new tienda_webUsers { UserName = Input.UserName, RFC = Input.RFC , Nombres = Input.Nombres, ApPat = Input.ApPat, ApMat = Input.ApMat};
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
+                /*if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
@@ -89,7 +108,7 @@ namespace tienda_web.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    await _emailSender.SendEmailAsync(Input.RFC, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
@@ -101,7 +120,7 @@ namespace tienda_web.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
-                }
+                }*/
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
