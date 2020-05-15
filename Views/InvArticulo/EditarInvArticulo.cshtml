@@ -1,0 +1,33 @@
+﻿@model InvArticulo
+
+@{
+    ViewData["Title"] = "Silo Manager";
+}
+
+<h2>Edición del stock: @Model.ArtModelo</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <label asp-for="ArtDesc" class="form-control">Descripción</label>
+        <input type="text" asp-for="ArtDesc" value="@Model.ArtDesc">
+    </div>
+    <div class="form-group">
+        <label asp-for="ArtId" class="form-control">Seleccione un artículo del catálogo</label>
+        @Html.DropDownList("ArtId", new SelectList(@ViewBag.CatArticulos, "Text", "Value"))
+    </div>
+    <div class="form-group">
+        <label asp-for="PrecioUnitario" class="form-control">Precio unitario</label>
+        <input type="text" asp-for="PrecioUnitario" value="@Model.PrecioUnitario">
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="CantidadNeta" value="@Model.CantidadNeta">
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="CantidadPrestada" value="@Model.CantidadPrestada">
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="CantidadEnAlmacen" value="@Model.CantidadEnAlmacen">
+    </div>
+    
+    <input type="submit"/>
+</form>

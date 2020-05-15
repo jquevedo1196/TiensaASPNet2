@@ -1,4 +1,4 @@
-﻿namespace tienda_web.Models
+﻿﻿namespace tienda_web.Models
 {
     public class Proveedor
     {

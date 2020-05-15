@@ -1,0 +1,45 @@
+﻿@model List<InvArticulo>
+@{
+    ViewData["Title"] = "Silo Manager";
+}
+
+<h2>Catálogo de Artículos</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Modelo/Serie</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Tipo de Artículo</th>
+            <th scope="col">Cantidad Neta</th>
+            <th scope="col">Cantidad En Almacen</th>
+            <th scope="col">Cantidad Prestada</th>
+            <th scope="col">Precio Unitario</th>
+            <th scope="col">Editar</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var invArticulo in @Model)
+        {
+            <tr>
+                <th scope="row">@invArticulo.ArtModelo</th>
+                <td>@ViewBag.Context.CatArticulos.Find(invArticulo.ArtId).ArtNombre</td>
+                <td>@ViewBag.Context.Marcas.Find(@ViewBag.Context.CatArticulos.Find(invArticulo.ArtId).MarcaId).VcMarcaName</td>
+                <td>@invArticulo.ArtDesc</td>
+                <td>@ViewBag.Context.CatTipoArts.Find(@ViewBag.Context.CatArticulos.Find(invArticulo.ArtId).TipoArtId).TipoArtDesc</td>
+                <td>@invArticulo.CantidadNeta</td>
+                <td>@invArticulo.CantidadEnAlmacen</td>
+                <td>@invArticulo.CantidadPrestada</td>
+                <td>@invArticulo.PrecioUnitario</td>
+                <td><a href="~/../InvArticulo/EditarInvArticulo/@invArticulo.ArtModelo">Editar</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a href="~/../InvArticulo/CrearInvArticulo/">Agregar artículo al stock</a>
+</div>

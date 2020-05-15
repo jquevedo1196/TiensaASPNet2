@@ -13,6 +13,8 @@ namespace tienda_web.Models
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<CatArticulo> CatArticulos { get; set; }
+        public DbSet<CatTipoArt> CatTipoArts { get; set; }
+        public DbSet<InvArticulo> InvArticulos { get; set; }
 
         public TiendaContext(DbContextOptions<TiendaContext> options) : base(options)
         {

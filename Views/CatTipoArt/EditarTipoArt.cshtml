@@ -1,0 +1,15 @@
+﻿@model CatTipoArt
+
+@{
+    ViewData["Title"] = "Silo Manager";
+}
+
+<h2>Edición del Proveedor @Model.TipoArtDesc</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <label asp-for="TipoArtDesc" class="form-control">Tipo de artículo</label>
+        <input type="text" asp-for="TipoArtDesc" value="@Model.TipoArtDesc">
+    </div>
+    <input type="submit"/>
+</form>

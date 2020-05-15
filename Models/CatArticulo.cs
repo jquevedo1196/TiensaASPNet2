@@ -8,5 +8,6 @@ namespace tienda_web.Models
         public int ArtId { get; set; } 
         public string ArtNombre { get; set; }
         public int MarcaId { get; set; }
+        public int TipoArtId { get; set; }
     }
 }
