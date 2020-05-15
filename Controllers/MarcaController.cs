@@ -3,9 +3,11 @@ using System.Linq;
 using System.Xml;
 using Microsoft.Data.SqlClient;
 using tienda_web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace tienda_web.Controllers
 {
+    [Authorize]
     public class MarcaController : Controller
     {
         private TiendaContext _context;

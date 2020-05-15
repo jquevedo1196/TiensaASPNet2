@@ -13,10 +13,11 @@ using Microsoft.EntityFrameworkCore;
 using tienda_web.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.SqlServer.Server;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace tienda_web.Controllers
 {
+    [Authorize]
     public class VentaController : Controller
     {
         private TiendaContext _context;

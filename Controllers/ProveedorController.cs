@@ -2,9 +2,11 @@
 using System.Linq;
 using Microsoft.Data.SqlClient;
 using tienda_web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace tienda_web.Controllers
 {
+    [Authorize]
     public class ProveedorController : Controller
     {
         private TiendaContext _context;

@@ -4,9 +4,11 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using tienda_web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace tienda_web.Controllers
 {
+    [Authorize]
     public class ProductoController : Controller
     {
         private TiendaContext _context;

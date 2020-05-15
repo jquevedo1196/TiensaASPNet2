@@ -1,10 +1,12 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using tienda_web.Models;
 
 namespace tienda_web.Controllers
 {
+    [Authorize]
     public class EmpresaController : Controller
     {
         private TiendaContext _context;

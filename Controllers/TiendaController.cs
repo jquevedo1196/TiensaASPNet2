@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using tienda_web.Models;
 
 namespace tienda_web.Controllers
 {
+    [Authorize]
     public class TiendaController : Controller
     {
         private TiendaContext _context;

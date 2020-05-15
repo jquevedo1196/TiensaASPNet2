@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -7,6 +8,7 @@ using tienda_web.Models;
 
 namespace tienda_web.Controllers
 {
+    [Authorize]
     public class CatArticuloController : Controller
     {
         private TiendaContext _context;

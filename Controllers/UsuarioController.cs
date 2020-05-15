@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using tienda_web.Models;
 
 namespace tienda_web.Controllers
 {
+    [Authorize]
     public class UsuarioController : Controller
     {
         private TiendaContext _context;
