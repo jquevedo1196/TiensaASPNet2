@@ -26,6 +26,7 @@ namespace tienda_web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
             services.AddDbContext<TiendaContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
@@ -48,6 +49,7 @@ namespace tienda_web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -55,6 +57,7 @@ namespace tienda_web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Tienda}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
