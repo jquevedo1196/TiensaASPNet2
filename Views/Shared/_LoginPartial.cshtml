@@ -8,35 +8,32 @@
         @if (SignInManager.IsSignedIn(User))
         {
             
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../Empresa/Empresas">Empresas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../CatArticulo/CatArticulos">Catálogo de artículos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../Proveedor/Proveedores">Provedores</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../Marca/Marcas">Marcas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../Producto/Productos">Productos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../Inventario/Inventario">Inventario</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../Venta/ListaDeVentas">Ventas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../Inventario/PorCaducar">Caducados/Por Caducar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../Usuario/Usuarios">Usuarios</a>
-                    </li>
-                </ul>
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../Empresa/Empresas">Empresas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../CatTipoArt/CatTipoArts">Tipos de artículos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../CatArticulo/CatArticulos">Catálogo de artículos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../Marca/Marcas">Marcas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../InvArticulo/InvArticulos">Inventario</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../Venta/ListaDeVentas">Ventas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../Inventario/PorCaducar">Caducados/Por Caducar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../Usuario/Usuarios">Usuarios</a>
+                </li>
+            </ul>
 
             <li class="nav-item">
                 <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)</a>
@@ -46,11 +43,11 @@
                     <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Cerrar sesión</button>
                 </form>
             </li>
-        }
-        else
-        {
+            }
+            else
+            {
             <li class="nav-item">
                 <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Iniciar sesión</a>
             </li>
-        }
-    </ul>
+            }
+        </ul>
