@@ -50,7 +50,14 @@ namespace tienda_web.Controllers
             {
                 marcasLists.Add(new SelectListItem(){Text = marca.MarcaId.ToString(), Value = marca.VcMarcaName});
             }
+            var tipoArtsLists = new List<SelectListItem>();
+            var tipoArts = _context.CatTipoArts.ToList();
+            foreach (var tipoArt in tipoArts)
+            {
+                tipoArtsLists.Add(new SelectListItem(){Text = tipoArt.TipoArtId.ToString(), Value = tipoArt.TipoArtDesc});
+            }
             ViewBag.Marcas = marcasLists;
+            ViewBag.CatTipoArts = tipoArtsLists;
             CatArticulo catArticulo = _context.CatArticulos.Find(catArticuloId);
             return View(catArticulo);
         }
@@ -74,7 +81,14 @@ namespace tienda_web.Controllers
             {
                 marcasLists.Add(new SelectListItem(){Text = marca.MarcaId.ToString(), Value = marca.VcMarcaName});
             }
+            var tipoArtsLists = new List<SelectListItem>();
+            var tipoArts = _context.CatTipoArts.ToList();
+            foreach (var tipoArt in tipoArts)
+            {
+                tipoArtsLists.Add(new SelectListItem(){Text = tipoArt.TipoArtId.ToString(), Value = tipoArt.TipoArtDesc});
+            }
             ViewBag.Marcas = marcasLists;
+            ViewBag.CatTipoArts = tipoArtsLists;
             return View();
         }
         

@@ -1,0 +1,15 @@
+﻿@model CatTipoArt
+
+@{
+    ViewData["Title"] = "Silo Manager";
+}
+
+<h2>Nuevo Tipo de Artículo</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <label asp-for="TipoArtDesc" class="form-control">Tipo de Artículo</label>
+        <input type="text" asp-for="TipoArtDesc">
+    </div>
+    <input type="submit"/>
+</form>

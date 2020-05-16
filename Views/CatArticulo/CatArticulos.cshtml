@@ -1,6 +1,6 @@
 ﻿@model List<CatArticulo>
 @{
-    ViewData["Title"] = "Proyecto de BD 'Tienda'";
+    ViewData["Title"] = "Silo Manager";
 }
 
 <h2>Catálogo de Artículos</h2>
@@ -11,6 +11,9 @@
             <th scope="col">#</th>
             <th scope="col">Nombre del Artículo</th>
             <th scope="col">Marca</th>
+            <th scope="col">Tipo de Artículo</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Eliminar</th>
         </tr>
         </thead>
         <tbody>
@@ -19,7 +22,8 @@
             <tr>
                 <th scope="row">@catArticulo.ArtId</th>
                 <td>@catArticulo.ArtNombre</td>
-                <td>@ViewBag.Context.Marcas.Find(@ViewBag.Context.CatArticulos.Find(@catArticulo.ArtId).MarcaId).VcMarcaName</td>
+                <td>@ViewBag.Context.Marcas.Find(catArticulo.MarcaId).VcMarcaName</td>
+                <td>@ViewBag.Context.CatTipoArts.Find(catArticulo.TipoArtId).TipoArtDesc</td>
                 <td><a href="~/../CatArticulo/EditarCatArticulo/@catArticulo.ArtId">Editar</a></td>
                 <td><a href="~/../CatArticulo/BorrarCatArticulo/@catArticulo.ArtId">Eliminar</a></td>
             </tr>
