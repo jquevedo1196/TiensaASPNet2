@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using tienda_web.Models;
 
 namespace tienda_web.Controllers
@@ -56,7 +58,34 @@ namespace tienda_web.Controllers
             RegistraBitacora("Proyectos", "Edición");
             return View("Proyectos", _context.Proyectos.ToList());
         }
-        
+
+        [Route("Proyecto/GenerarReporteSalida/{proyectoId}")]
+        public IActionResult GenerarReportes(int proyectoId)
+        {
+            string sql =
+                "SELECT Salidas.ArtModelo as 'Modelo/Serie', CatArticulos.ArtNombre as 'Artículo', Salidas.Cantidad, Salidas.Fecha FROM CatArticulos INNER JOIN InvArticulos ON CatArticulos.ArtId = InvArticulos.ArtId INNER JOIN Salidas ON InvArticulos.ArtModelo = Salidas.ArtModelo WHERE Salidas.ProyectoId = ";
+            List<Salida> salidas = _context.Salidas.FromSqlRaw(sql + proyectoId).ToList();
+            using (XmlWriter writer =
+                XmlWriter.Create(@"C:\Users\jenri\OneDrive\Escritorio\DocsProyectoBD\XML\facturas.xml"))
+            {
+                writer.WriteStartElement("ProyectoId", salidas[0].ProyectoId.ToString());
+                foreach (var salida in salidas)
+                {
+                    writer.WriteStartElement("ArtModelo", salida.ArtModelo.ToString());
+                    writer.WriteElementString("ArtNombre", salida.ArtNombre.ToString());
+                    writer.WriteElementString("Cantidad", salida.Cantidad.ToString());
+                    writer.WriteElementString("Fecha", salida.Fecha.ToString());
+                    writer.WriteEndElement();
+                }
+
+                writer.WriteEndElement();
+                writer.Flush();
+                GeneratePdfFile(ventaId, facturas);
+            }
+
+            return View("Venta", facturas);
+        }
+
         public IActionResult CrearProyecto()
         {
             var empresasList = new List<SelectListItem>();
