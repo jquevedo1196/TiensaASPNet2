@@ -11,6 +11,5 @@ namespace tienda_web.Models
         public int CantidadNeta  { get; set; }
         public int CantidadPrestada  { get; set; }
         public int CantidadEnAlmacen  { get; set; }
-        public decimal PrecioUnitario  { get; set; }
     }
 }

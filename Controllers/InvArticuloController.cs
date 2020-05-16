@@ -42,6 +42,7 @@ namespace tienda_web.Controllers
         [Route("InvArticulo/EditarInvArticulo/{artModelo}")]
         public IActionResult EditarInvArticulo(InvArticulo invArticulo)
         {
+            invArticulo.CantidadEnAlmacen = invArticulo.CantidadNeta - invArticulo.CantidadPrestada; 
             ViewBag.Context = _context;
             _context.InvArticulos.Update(invArticulo);
             _context.SaveChanges();

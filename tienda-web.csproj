@@ -23,6 +23,19 @@
     <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
     <_ContentIncludedByDefault Remove="wwwroot\images\onlineshopping.gif" />
+    <_ContentIncludedByDefault Remove="Views\Usuario\CrearUsuario.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Usuario\Usuarios.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Producto\BusquedaProducto.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Producto\CrearProducto.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Producto\EditarProducto.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Producto\Productos.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Proveedor\CrearProveedor.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Proveedor\EditarProveedor.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Proveedor\Proveedores.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Venta\AgregarProducto.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Venta\ListaDeVentas.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Venta\NuevaVenta.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Venta\Venta.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,6 +84,42 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Update="Views\InvArticulo\CrearInvArticulo.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Proyecto\Proyectos.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Proyecto\EditarProyecto.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Proyecto\CrearProyecto.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Salida\Informacion.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Almacen\Salidas\VerSalidas.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Almacen\Salidas\AgregarSalidas.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Almacen\Entradas\VerEntradas.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Almacen\Entradas\AgregarEntradas.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\AuthAlma\Informacion.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
