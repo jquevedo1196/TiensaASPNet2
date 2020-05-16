@@ -1,4 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Data;
+using iTextSharp.text.pdf;
+using System.IO;
+using iTextSharp.text;
+using System.Diagnostics;
+using Microsoft.SqlServer.Server;
+using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Microsoft.AspNetCore.Mvc;
@@ -80,10 +88,27 @@ namespace tienda_web.Controllers
 
                 writer.WriteEndElement();
                 writer.Flush();
-                GeneratePdfFile(ventaId, facturas);
+                GeneratePdfOutFile(proyectoId, salidas);
             }
 
-            return View("Venta", facturas);
+            return View("Proyecto", salidas);
+        }
+
+        protected void GeneratePdfOutFile(int proyectoId, List<Salida> salidas)
+        {
+            string path = $@"C:\Users\winxp\DesktopReporte-{DateTime.Now.ToString("dd-MM-yyyy")}_folio{proyectoId}.pdf";
+            //Create document  
+            Document doc = new Document();
+            //Create PDF Table  
+            PdfPTable tableLayout = new PdfPTable(3);
+            //Create a PDF file in specific path  
+            PdfWriter.GetInstance(doc, new FileStream(path, FileMode.Create));
+            //Open the PDF document  
+            doc.Open();
+            //Add Content to PDF  
+            doc.Add(Add_Content_To_PDF(tableLayout, proyectoId, salidas));
+            // Closing the document  
+            doc.Close();
         }
 
         public IActionResult CrearProyecto()
