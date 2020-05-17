@@ -225,21 +225,22 @@ namespace tienda_web.Controllers
                 $" lista de materiales para la empresa {empresa.EmpresaRazSoc} con el RFC {empresa.EmpresaRfc} con dirección en {empresa.EmpresaCalle}" +
                 $" No. {empresa.EmpresaNumExt} Int. {empresa.EmpresaNumInt} Ciudad {empresa.EmpresaCd} C.P. {empresa.EmpresaCp} en {empresa.EmpresaEdo}.";
             }
-            //Add Title to the PDF file at the top  
+            //Add Title to the PDF file at the top 
             tableLayout.AddCell(
-                new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 13, 1)))
+                new PdfPCell(new Paragraph(titulo, new Font(Font.FontFamily.HELVETICA, 13, 1)))
                 {
-                    Colspan = 4,
+                    Colspan = 6,
                     Border = 0,
                     PaddingBottom = 20,
                     HorizontalAlignment = Element.ALIGN_CENTER
                 });
+
             tableLayout.AddCell(
                 new PdfPCell(new Phrase(intro, new Font(Font.FontFamily.HELVETICA, 8, 1)))
                 {
-                    Colspan = 4,
+                    Colspan = 12,
                     Border = 0,
-                    PaddingBottom = 30,
+                    PaddingBottom = 20,
                     HorizontalAlignment = Element.ALIGN_JUSTIFIED
                 });
             //Add header  
@@ -272,9 +273,9 @@ namespace tienda_web.Controllers
                 }
             }
             tableLayout.AddCell(
-                new PdfPCell(new Phrase("________________________", new Font(Font.FontFamily.HELVETICA, 13, 1)))
+                new PdfPCell(new Phrase("\n\n\n\n\n________________________", new Font(Font.FontFamily.HELVETICA, 13, 1)))
                 {
-                    Colspan = 4,
+                    Colspan = 15,
                     Border = 0,
                     PaddingBottom = 0,
                     HorizontalAlignment = Element.ALIGN_CENTER
@@ -282,7 +283,7 @@ namespace tienda_web.Controllers
             tableLayout.AddCell(
                 new PdfPCell(new Phrase("Firma de conformidad", new Font(Font.FontFamily.HELVETICA, 13, 1)))
                 {
-                    Colspan = 4,
+                    Colspan = 18,
                     Border = 0,
                     PaddingBottom = 20,
                     HorizontalAlignment = Element.ALIGN_CENTER
