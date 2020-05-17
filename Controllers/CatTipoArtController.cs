@@ -82,7 +82,7 @@ namespace tienda_web.Controllers
             SqlConnection conection = new SqlConnection("Server= localhost; Database= webstore; Integrated Security=SSPI; Server=localhost\\sqlexpress;");
             conection.Open();
             SqlCommand command = new SqlCommand(query,conection); // Create a object of SqlCommand class
-            command.ExecuteNonQuery();            conection.Close();
+            command.ExecuteNonQuery(); conection.Close();
         }
         
         public void RegistraBitacora(string tabla, string operacion)
