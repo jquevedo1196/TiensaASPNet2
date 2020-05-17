@@ -164,7 +164,7 @@ namespace tienda_web.Controllers
         }
 
         [Route("Almacen/GenerarReporteSalida/{proyectoId}")]
-        public IActionResult GenerarReportes(int proyectoId)
+        public IActionResult GenerarReportesSalida(int proyectoId)
         {
             string pathdb = _context.Parametros.FirstOrDefault(parametro => parametro.VcParamName == "PathBuildPdf")?.VcParamValue;
             ViewBag.Context = _context;
@@ -173,9 +173,19 @@ namespace tienda_web.Controllers
             return View("Informacion", _context.Proyectos.ToList());
         }
 
+        [Route("Almacen/GenerarReporteEntrada/{proyectoId}")]
+        public IActionResult GenerarReportesEntrada(int proyectoId)
+        {
+            string pathdb = _context.Parametros.FirstOrDefault(parametro => parametro.VcParamName == "PathBuildPdf")?.VcParamValue;
+            ViewBag.Context = _context;
+            GeneratePdfFile(proyectoId, "Entrada", pathdb);
+            TempData["Success"] = $"Archivo generado correctamente en la ruta {pathdb}!";
+            return View("Informacion", _context.Proyectos.ToList());
+        }
+
         protected void GeneratePdfFile(int proyectoId, string opt, string pathdb)
         {
-            string path = $@"{pathdb}Reporte-{DateTime.Now.ToString("dd-MM-yyyy")}_proyecto_{proyectoId}.pdf";
+            string path = (opt == "Salida")? $@"{pathdb}Reporte-Salida-{DateTime.Now.ToString("dd-MM-yyyy")}_proyecto_{proyectoId}.pdf" : $@"{pathdb}Reporte-Entrada-{DateTime.Now.ToString("dd-MM-yyyy")}_proyecto_{proyectoId}.pdf";
             //Create document  
             Document doc = new Document();
             //Create PDF Table  
@@ -207,24 +217,14 @@ namespace tienda_web.Controllers
             List<CatArticulo> catArticulos = _context.CatArticulos.Where(x => invArtIds.Contains(x.ArtId)).ToList();
             List<CatTipoArt> catTipoArts = _context.CatTipoArts.ToList();
             AspNetUser user = _context.AspNetUsers.Find(proyecto.UserId);
+            /******ENTRADA******/
+            List<Entrada> entradas = _context.Entradas.Where(entrada => entrada.ProyectoId == proyectoId).ToList();
+            List<string> entradasModels = entradas.Select(e => e.ArtModelo).ToList();
+            List<InvArticulo> eInvArticulos = _context.InvArticulos.Where(x => entradasModels.Contains(x.ArtModelo)).ToList();
 
-            string titulo = "";
-            string intro = "";
-
-            if (opt == "Salida")
-            {
-                titulo = "Reporte de salida de material";
-                intro = $"Por medio de la presente, se autoriza a {user.Nombres} {user.ApPat} {user.ApMat} con el RFC {user.RFC} para sacar la siguiente" +
-                $" lista de materiales para la empresa {empresa.EmpresaRazSoc} con el RFC {empresa.EmpresaRfc} con dirección en {empresa.EmpresaCalle}" +
-                $" No. {empresa.EmpresaNumExt} Int. {empresa.EmpresaNumInt} Ciudad {empresa.EmpresaCd} C.P. {empresa.EmpresaCp} en {empresa.EmpresaEdo}.";
-            }
-            else
-            {
-                titulo = "Reporte de entrada de material";
-                intro = $"Por medio de la presente, se autoriza a {user.Nombres} {user.ApPat} {user.ApMat} con el RFC {user.RFC} para sacar la siguiente" +
-                $" lista de materiales para la empresa {empresa.EmpresaRazSoc} con el RFC {empresa.EmpresaRfc} con dirección en {empresa.EmpresaCalle}" +
-                $" No. {empresa.EmpresaNumExt} Int. {empresa.EmpresaNumInt} Ciudad {empresa.EmpresaCd} C.P. {empresa.EmpresaCp} en {empresa.EmpresaEdo}.";
-            }
+            string titulo = (opt == "Salida") ? "Reporte de salida de material" : "Reporte de entrada de material";
+            string intro = (opt == "Salida") ? $"Por medio de la presente, se autoriza a {user.Nombres} {user.ApPat} {user.ApMat} con el RFC {user.RFC} para sacar la siguiente lista de materiales para la empresa {empresa.EmpresaRazSoc} con el RFC {empresa.EmpresaRfc} con dirección en {empresa.EmpresaCalle} No. {empresa.EmpresaNumExt} Int. {empresa.EmpresaNumInt} Ciudad {empresa.EmpresaCd} C.P. {empresa.EmpresaCp} en {empresa.EmpresaEdo}." : $"Por medio de la presente, se autoriza a {user.Nombres} {user.ApPat} {user.ApMat} con el RFC {user.RFC} para ingresar la siguiente lista de materiales provenientes de la empresa {empresa.EmpresaRazSoc} con el RFC {empresa.EmpresaRfc} con dirección en {empresa.EmpresaCalle} No. {empresa.EmpresaNumExt} Int. {empresa.EmpresaNumInt} Ciudad {empresa.EmpresaCd} C.P. {empresa.EmpresaCp} en {empresa.EmpresaEdo}.";
+            
             //Add Title to the PDF file at the top 
             tableLayout.AddCell(
                 new PdfPCell(new Paragraph(titulo, new Font(Font.FontFamily.HELVETICA, 13, 1)))
@@ -250,28 +250,56 @@ namespace tienda_web.Controllers
             AddCellToHeader(tableLayout, "Tipo de Artículo");
             AddCellToHeader(tableLayout, "Cantidad");
             AddCellToHeader(tableLayout, "Fecha");
-            foreach (Salida salida in salidas)
+            if (opt == "Salida")
             {
-                foreach (InvArticulo invArticulo in invArticulos)
+                foreach (Salida salida in salidas)
                 {
-                    foreach (CatArticulo catArticulo in catArticulos)
+                    foreach (InvArticulo invArticulo in invArticulos)
                     {
-                        foreach (CatTipoArt catTipoArt in catTipoArts)
+                        foreach (CatArticulo catArticulo in catArticulos)
                         {
-                            if (salida.ArtModelo == invArticulo.ArtModelo && invArticulo.ArtId == catArticulo.ArtId && catArticulo.TipoArtId == catTipoArt.TipoArtId)
+                            foreach (CatTipoArt catTipoArt in catTipoArts)
                             {
-                                Marca marca = _context.Marcas.Find(catArticulo.MarcaId);
-                                AddCellToBody(tableLayout, salida.ArtModelo);
-                                AddCellToBody(tableLayout, catArticulo.ArtNombre);
-                                AddCellToBody(tableLayout, marca.VcMarcaName);
-                                AddCellToBody(tableLayout, catTipoArt.TipoArtDesc);
-                                AddCellToBody(tableLayout, salida.Cantidad.ToString());
-                                AddCellToBody(tableLayout, salida.Fecha.ToShortDateString());
+                                if (salida.ArtModelo == invArticulo.ArtModelo && invArticulo.ArtId == catArticulo.ArtId && catArticulo.TipoArtId == catTipoArt.TipoArtId)
+                                {
+                                    Marca marca = _context.Marcas.Find(catArticulo.MarcaId);
+                                    AddCellToBody(tableLayout, salida.ArtModelo);
+                                    AddCellToBody(tableLayout, catArticulo.ArtNombre);
+                                    AddCellToBody(tableLayout, marca.VcMarcaName);
+                                    AddCellToBody(tableLayout, catTipoArt.TipoArtDesc);
+                                    AddCellToBody(tableLayout, salida.Cantidad.ToString());
+                                    AddCellToBody(tableLayout, salida.Fecha.ToShortDateString());
+                                }
                             }
                         }
                     }
                 }
             }
+            else {
+                foreach (Entrada entrada in entradas)
+                {
+                    foreach (InvArticulo invArticulo in invArticulos)
+                    {
+                        foreach (CatArticulo catArticulo in catArticulos)
+                        {
+                            foreach (CatTipoArt catTipoArt in catTipoArts)
+                            {
+                                if (entrada.ArtModelo == invArticulo.ArtModelo && invArticulo.ArtId == catArticulo.ArtId && catArticulo.TipoArtId == catTipoArt.TipoArtId)
+                                {
+                                    Marca marca = _context.Marcas.Find(catArticulo.MarcaId);
+                                    AddCellToBody(tableLayout, entrada.ArtModelo);
+                                    AddCellToBody(tableLayout, catArticulo.ArtNombre);
+                                    AddCellToBody(tableLayout, marca.VcMarcaName);
+                                    AddCellToBody(tableLayout, catTipoArt.TipoArtDesc);
+                                    AddCellToBody(tableLayout, entrada.Cantidad.ToString());
+                                    AddCellToBody(tableLayout, entrada.Fecha.ToShortDateString());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
             tableLayout.AddCell(
                 new PdfPCell(new Phrase("\n\n\n\n\n________________________", new Font(Font.FontFamily.HELVETICA, 13, 1)))
                 {
@@ -281,7 +309,7 @@ namespace tienda_web.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER
                 });
             tableLayout.AddCell(
-                new PdfPCell(new Phrase("Firma de conformidad", new Font(Font.FontFamily.HELVETICA, 13, 1)))
+                new PdfPCell(new Phrase("Firma de enterado", new Font(Font.FontFamily.HELVETICA, 13, 1)))
                 {
                     Colspan = 18,
                     Border = 0,
