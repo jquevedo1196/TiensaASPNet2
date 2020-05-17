@@ -14,7 +14,7 @@ namespace tienda_web.Models
         public DbSet<AspNetUser> AspNetUsers { get; set; }
         public DbSet<Salida> Salidas { get; set; }
         public DbSet<Entrada> Entradas { get; set; }
-
+        public DbSet<Parametro> Parametros { get; set; }
         public TiendaContext(DbContextOptions<TiendaContext> options) : base(options)
         {
 

@@ -166,15 +166,18 @@ namespace tienda_web.Controllers
         [Route("Almacen/GenerarReporteSalida/{proyectoId}")]
         public IActionResult GenerarReportes(int proyectoId)
         {
+            string pathdb = _context.Parametros.Where(parametro => parametro.VcParamName == "PathBuildPdf").FirstOrDefault().VcParamValue;
             ViewBag.Context = _context;
-            GeneratePdfFile(proyectoId, "Salida");
-            TempData["Success"] = "Archivo generado correctamente en la ruta X!";
+            GeneratePdfFile(proyectoId, "Salida", pathdb);
+
+            TempData["Success"] = $"Archivo generado correctamente en la ruta {pathdb}!";
             return View("Informacion", _context.Proyectos.ToList());
         }
 
-        protected void GeneratePdfFile(int proyectoId, string opt)
+        protected void GeneratePdfFile(int proyectoId, string opt, string pathdb)
         {
-            string path = $@"C:\Users\winxp\Desktop\Reporte-{DateTime.Now.ToString("dd-MM-yyyy")}_folio{proyectoId}.pdf";
+            
+            string path = $@"{pathdb}Reporte-{DateTime.Now.ToString("dd-MM-yyyy")}_proyecto_{proyectoId}.pdf";
             //Create document  
             Document doc = new Document();
             //Create PDF Table  
