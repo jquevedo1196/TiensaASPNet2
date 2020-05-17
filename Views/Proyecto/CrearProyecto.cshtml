@@ -16,12 +16,12 @@
     </div>
     <div class="form-group">
         <label asp-for="EmpresaRfc" class="form-control">Seleccione una Empresa</label>
-        @Html.DropDownList("EmpresaRfc", new SelectList(@ViewBag.Empresas, "Text", "Value"))
+        @Html.DropDownList("EmpresaRfc", new SelectList(@ViewBag.Empresas, "Text", "Value"), "--Elije una opción--", new { required = "required" })
         <span asp-validation-for="EmpresaRfc" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="UserId" class="form-control">Seleccione un Manager de Proyecto</label>
-        @Html.DropDownList("UserId", new SelectList(@ViewBag.AspNetUsers, "Text", "Value"))
+        @Html.DropDownList("UserId", new SelectList(@ViewBag.AspNetUsers, "Text", "Value"), "--Elije una opción--", new { required = "required" })
         <span asp-validation-for="UserId" class="text-danger"></span>
     </div>
     <input type="submit" value="Guardar"/>
