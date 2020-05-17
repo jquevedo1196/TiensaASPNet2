@@ -21,8 +21,7 @@
     </div>
     <div class="form-group">
         <label asp-for="ArtId" class="form-control">Seleccione un artículo del catálogo</label>
-        @Html.DropDownList("ArtId", new SelectList(@ViewBag.CatArticulos, "Text", "Value"), "--Elije una opción--", new { required = "required" })
-        @Html.ValidationMessage("ArtId")
+        @Html.DropDownList("ArtId", new SelectList(@ViewBag.CatArticulos, "Text", "Value"))
         <span asp-validation-for="ArtId" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -36,7 +35,7 @@
         <span asp-validation-for="CantidadPrestada" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="CantidadEnAlmacen" class="form-control">Cantidad an almacen</label>
+        <label asp-for="CantidadEnAlmacen" class="form-control">Cantidad al almacén</label>
         <input type="text" asp-for="CantidadEnAlmacen">
         <span asp-validation-for="CantidadEnAlmacen" class="text-danger"></span>
     </div>

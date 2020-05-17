@@ -19,12 +19,12 @@ namespace tienda_web.Models
         [MaxLength(100, ErrorMessage = "El nombre del responsable no puede exceder de 100 caracteres.")]
         public string UserId { get; set; }
 
-        //[Required(ErrorMessage = "Debe ingresar el valor de autorización de salida")]
-        //[MaxLength(2, ErrorMessage = "El valor de autorización de salida no puede exceder de 2 caracteres.")]
+        [Required(ErrorMessage = "Debe ingresar el valor de autorización de salida")]
+        [MaxLength(2, ErrorMessage = "El valor de autorización de salida no puede exceder de 2 caracteres.")]
         public string AuthSalida { get; set; }
 
-        //[Required(ErrorMessage = "Debe ingresar el valor de autorización de entrada")]
-        //[MaxLength(2, ErrorMessage = "El valor de autorización de entrada no puede exceder de 2 caracteres.")]
+        [Required(ErrorMessage = "Debe ingresar el valor de autorización de entrada")]
+        [MaxLength(2, ErrorMessage = "El valor de autorización de entrada no puede exceder de 2 caracteres.")]
         public string AuthEntrada { get; set; }
     }
 }

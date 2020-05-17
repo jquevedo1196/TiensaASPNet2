@@ -11,7 +11,7 @@ namespace tienda_web.Models
         [MaxLength(35, ErrorMessage = "El nombre de la marca no puede exeder de 35 caracteres.")]
         public string VcMarcaName { get; set; }
 
-        //[Required(ErrorMessage = "Debe ingresar el estatus de la marca.")]
+        [Required(ErrorMessage = "Debe ingresar el estatus de la marca.")]
         public string VcMarcaStatus { get; set; }
     }
 }
