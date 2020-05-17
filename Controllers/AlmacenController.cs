@@ -166,17 +166,15 @@ namespace tienda_web.Controllers
         [Route("Almacen/GenerarReporteSalida/{proyectoId}")]
         public IActionResult GenerarReportes(int proyectoId)
         {
-            string pathdb = _context.Parametros.Where(parametro => parametro.VcParamName == "PathBuildPdf").FirstOrDefault().VcParamValue;
+            string pathdb = _context.Parametros.FirstOrDefault(parametro => parametro.VcParamName == "PathBuildPdf")?.VcParamValue;
             ViewBag.Context = _context;
             GeneratePdfFile(proyectoId, "Salida", pathdb);
-
             TempData["Success"] = $"Archivo generado correctamente en la ruta {pathdb}!";
             return View("Informacion", _context.Proyectos.ToList());
         }
 
         protected void GeneratePdfFile(int proyectoId, string opt, string pathdb)
         {
-            
             string path = $@"{pathdb}Reporte-{DateTime.Now.ToString("dd-MM-yyyy")}_proyecto_{proyectoId}.pdf";
             //Create document  
             Document doc = new Document();
@@ -262,12 +260,12 @@ namespace tienda_web.Controllers
                             if (salida.ArtModelo == invArticulo.ArtModelo && invArticulo.ArtId == catArticulo.ArtId && catArticulo.TipoArtId == catTipoArt.TipoArtId)
                             {
                                 Marca marca = _context.Marcas.Find(catArticulo.MarcaId);
-                                AddCellToBody(tableLayout, salida.ArtModelo.ToString());
+                                AddCellToBody(tableLayout, salida.ArtModelo);
                                 AddCellToBody(tableLayout, catArticulo.ArtNombre);
-                                AddCellToBody(tableLayout, marca.VcMarcaName.ToString());
+                                AddCellToBody(tableLayout, marca.VcMarcaName);
                                 AddCellToBody(tableLayout, catTipoArt.TipoArtDesc);
                                 AddCellToBody(tableLayout, salida.Cantidad.ToString());
-                                AddCellToBody(tableLayout, salida.Fecha.ToString());
+                                AddCellToBody(tableLayout, salida.Fecha.ToShortDateString());
                             }
                         }
                     }
