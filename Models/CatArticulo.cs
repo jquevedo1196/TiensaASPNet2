@@ -11,10 +11,10 @@ namespace tienda_web.Models
         [MaxLength(30, ErrorMessage = "El nombre del artículo no puede exceder de 30 caracteres.")]
         public string ArtNombre { get; set; }
 
-        //[Required(ErrorMessage = "Debe seleccionar alguna marca.")]
+        [Required(ErrorMessage = "Debe seleccionar alguna marca.")]
         public int MarcaId { get; set; }
 
-        //[Required(ErrorMessage = "Debe seleccionar el tipo de artículo.")]
+        [Required(ErrorMessage = "Debe seleccionar el tipo de artículo.")]
         public int TipoArtId { get; set; }
     }
 }
