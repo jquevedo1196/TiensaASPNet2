@@ -1,11 +1,4 @@
-﻿using System;
-using System.Data;
-using iTextSharp.text.pdf;
-using System.IO;
-using iTextSharp.text;
-using System.Diagnostics;
-using Microsoft.SqlServer.Server;
-using Microsoft.AspNetCore.Authorization;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -65,50 +58,6 @@ namespace tienda_web.Controllers
             _context.SaveChanges();
             RegistraBitacora("Proyectos", "Edición");
             return View("Proyectos", _context.Proyectos.ToList());
-        }
-
-        [Route("Proyecto/GenerarReporteSalida/{proyectoId}")]
-        public IActionResult GenerarReportes(int proyectoId)
-        {
-            string sql =
-                "SELECT Salidas.ArtModelo as 'Modelo/Serie', CatArticulos.ArtNombre as 'Artículo', Salidas.Cantidad, Salidas.Fecha FROM CatArticulos INNER JOIN InvArticulos ON CatArticulos.ArtId = InvArticulos.ArtId INNER JOIN Salidas ON InvArticulos.ArtModelo = Salidas.ArtModelo WHERE Salidas.ProyectoId = ";
-            List<Salida> salidas = _context.Salidas.FromSqlRaw(sql + proyectoId).ToList();
-            using (XmlWriter writer =
-                XmlWriter.Create(@"C:\Users\jenri\OneDrive\Escritorio\DocsProyectoBD\XML\facturas.xml"))
-            {
-                writer.WriteStartElement("ProyectoId", salidas[0].ProyectoId.ToString());
-                foreach (var salida in salidas)
-                {
-                    writer.WriteStartElement("ArtModelo", salida.ArtModelo.ToString());
-                    writer.WriteElementString("ArtNombre", salida.ArtNombre.ToString());
-                    writer.WriteElementString("Cantidad", salida.Cantidad.ToString());
-                    writer.WriteElementString("Fecha", salida.Fecha.ToString());
-                    writer.WriteEndElement();
-                }
-
-                writer.WriteEndElement();
-                writer.Flush();
-                GeneratePdfOutFile(proyectoId, salidas);
-            }
-
-            return View("Proyecto", salidas);
-        }
-
-        protected void GeneratePdfOutFile(int proyectoId, List<Salida> salidas)
-        {
-            string path = $@"C:\Users\winxp\DesktopReporte-{DateTime.Now.ToString("dd-MM-yyyy")}_folio{proyectoId}.pdf";
-            //Create document  
-            Document doc = new Document();
-            //Create PDF Table  
-            PdfPTable tableLayout = new PdfPTable(3);
-            //Create a PDF file in specific path  
-            PdfWriter.GetInstance(doc, new FileStream(path, FileMode.Create));
-            //Open the PDF document  
-            doc.Open();
-            //Add Content to PDF  
-            doc.Add(Add_Content_To_PDF(tableLayout, proyectoId, salidas));
-            // Closing the document  
-            doc.Close();
         }
 
         public IActionResult CrearProyecto()

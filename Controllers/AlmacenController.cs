@@ -5,6 +5,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using tienda_web.Models;
 
+
+using System;
+using System.Data;
+using iTextSharp.text.pdf;
+using System.IO;
+using iTextSharp.text;
+using System.Diagnostics;
+using Microsoft.SqlServer.Server;
+using Microsoft.AspNetCore.Authorization;
+
 namespace tienda_web.Controllers
 {
     public class AlmacenController : Controller
@@ -152,5 +162,152 @@ namespace tienda_web.Controllers
             string artModeloRender = "'" + artModelo + "'";
             ExecuteQuery($"exec ActualizaEntradaStock {artModeloRender}, {cantidad}");
         }
+
+        [Route("Almacen/GenerarReporteSalida/{proyectoId}")]
+        public IActionResult GenerarReportes(int proyectoId)
+        {
+            ViewBag.Context = _context;
+            GeneratePdfFile(proyectoId, "Salida");
+            TempData["Success"] = "Archivo generado correctamente en la ruta X!";
+            return View("Informacion", _context.Proyectos.ToList());
+        }
+
+        protected void GeneratePdfFile(int proyectoId, string opt)
+        {
+            string path = $@"C:\Users\winxp\Desktop\Reporte-{DateTime.Now.ToString("dd-MM-yyyy")}_folio{proyectoId}.pdf";
+            //Create document  
+            Document doc = new Document();
+            //Create PDF Table  
+            PdfPTable tableLayout = new PdfPTable(6);
+            //Create a PDF file in specific path  
+            PdfWriter.GetInstance(doc, new FileStream(path, FileMode.Create));
+            //Open the PDF document  
+            doc.Open();
+            //Add Content to PDF  
+            doc.Add(Add_Content_To_PDF(tableLayout, proyectoId, opt));
+            // Closing the document  
+            doc.Close();
+        }
+
+        private PdfPTable Add_Content_To_PDF(PdfPTable tableLayout, int proyectoId, string opt)
+        {
+            float[] headers =
+            {
+                20, 20, 20, 20, 20, 20
+            }; //Header Widths  
+            tableLayout.SetWidths(headers); //Set the pdf headers  
+            tableLayout.WidthPercentage = 80; //Set the PDF File witdh percentage  
+            Proyecto proyecto = _context.Proyectos.Find(proyectoId);
+            Empresa empresa = _context.Empresas.Find(proyecto.EmpresaRfc);
+            List<Salida> salidas = _context.Salidas.Where(salida => salida.ProyectoId == proyectoId).ToList();
+            List<string> salidasModels = salidas.Select(s => s.ArtModelo).ToList();
+            List<InvArticulo> invArticulos = _context.InvArticulos.Where(x => salidasModels.Contains(x.ArtModelo)).ToList();
+            List<int> invArtIds = invArticulos.Select(s => s.ArtId).ToList();
+            List<CatArticulo> catArticulos = _context.CatArticulos.Where(x => invArtIds.Contains(x.ArtId)).ToList();
+            List<CatTipoArt> catTipoArts = _context.CatTipoArts.ToList();
+            AspNetUser user = _context.AspNetUsers.Find(proyecto.UserId);
+
+            string titulo = "";
+            string intro = "";
+
+            if (opt == "Salida")
+            {
+                titulo = "Reporte de salida de material";
+                intro = $"Por medio de la presente, se autoriza a {user.Nombres} {user.ApPat} {user.ApMat} con el RFC {user.RFC} para sacar la siguiente" +
+                $" lista de materiales para la empresa {empresa.EmpresaRazSoc} con el RFC {empresa.EmpresaRfc} con dirección en {empresa.EmpresaCalle}" +
+                $" No. {empresa.EmpresaNumExt} Int. {empresa.EmpresaNumInt} Ciudad {empresa.EmpresaCd} C.P. {empresa.EmpresaCp} en {empresa.EmpresaEdo}.";
+            }
+            else
+            {
+                titulo = "Reporte de entrada de material";
+                intro = $"Por medio de la presente, se autoriza a {user.Nombres} {user.ApPat} {user.ApMat} con el RFC {user.RFC} para sacar la siguiente" +
+                $" lista de materiales para la empresa {empresa.EmpresaRazSoc} con el RFC {empresa.EmpresaRfc} con dirección en {empresa.EmpresaCalle}" +
+                $" No. {empresa.EmpresaNumExt} Int. {empresa.EmpresaNumInt} Ciudad {empresa.EmpresaCd} C.P. {empresa.EmpresaCp} en {empresa.EmpresaEdo}.";
+            }
+            //Add Title to the PDF file at the top  
+            tableLayout.AddCell(
+                new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 13, 1)))
+                {
+                    Colspan = 4,
+                    Border = 0,
+                    PaddingBottom = 20,
+                    HorizontalAlignment = Element.ALIGN_CENTER
+                });
+            tableLayout.AddCell(
+                new PdfPCell(new Phrase(intro, new Font(Font.FontFamily.HELVETICA, 8, 1)))
+                {
+                    Colspan = 4,
+                    Border = 0,
+                    PaddingBottom = 30,
+                    HorizontalAlignment = Element.ALIGN_JUSTIFIED
+                });
+            //Add header  
+            AddCellToHeader(tableLayout, "Modelo");
+            AddCellToHeader(tableLayout, "Artículo");
+            AddCellToHeader(tableLayout, "Marca");
+            AddCellToHeader(tableLayout, "Tipo de Artículo");
+            AddCellToHeader(tableLayout, "Cantidad");
+            AddCellToHeader(tableLayout, "Fecha");
+            foreach (Salida salida in salidas)
+            {
+                foreach (InvArticulo invArticulo in invArticulos)
+                {
+                    foreach (CatArticulo catArticulo in catArticulos)
+                    {
+                        foreach (CatTipoArt catTipoArt in catTipoArts)
+                        {
+                            if (salida.ArtModelo == invArticulo.ArtModelo && invArticulo.ArtId == catArticulo.ArtId && catArticulo.TipoArtId == catTipoArt.TipoArtId)
+                            {
+                                Marca marca = _context.Marcas.Find(catArticulo.MarcaId);
+                                AddCellToBody(tableLayout, salida.ArtModelo.ToString());
+                                AddCellToBody(tableLayout, catArticulo.ArtNombre);
+                                AddCellToBody(tableLayout, marca.VcMarcaName.ToString());
+                                AddCellToBody(tableLayout, catTipoArt.TipoArtDesc);
+                                AddCellToBody(tableLayout, salida.Cantidad.ToString());
+                                AddCellToBody(tableLayout, salida.Fecha.ToString());
+                            }
+                        }
+                    }
+                }
+            }
+            tableLayout.AddCell(
+                new PdfPCell(new Phrase("________________________", new Font(Font.FontFamily.HELVETICA, 13, 1)))
+                {
+                    Colspan = 4,
+                    Border = 0,
+                    PaddingBottom = 0,
+                    HorizontalAlignment = Element.ALIGN_CENTER
+                });
+            tableLayout.AddCell(
+                new PdfPCell(new Phrase("Firma de conformidad", new Font(Font.FontFamily.HELVETICA, 13, 1)))
+                {
+                    Colspan = 4,
+                    Border = 0,
+                    PaddingBottom = 20,
+                    HorizontalAlignment = Element.ALIGN_CENTER
+                });
+            return tableLayout;
+        }
+
+        // Method to add single cell to the header  
+        private static void AddCellToHeader(PdfPTable tableLayout, string cellText)
+        {
+            tableLayout.AddCell(new PdfPCell(new Phrase(cellText, new Font(Font.FontFamily.HELVETICA, 8, 1)))
+            {
+                HorizontalAlignment = Element.ALIGN_CENTER,
+                Padding = 5
+            });
+        }
+
+        // Method to add single cell to the body  
+        private static void AddCellToBody(PdfPTable tableLayout, string cellText)
+        {
+            tableLayout.AddCell(new PdfPCell(new Phrase(cellText, new Font(Font.FontFamily.HELVETICA, 8, 1)))
+            {
+                HorizontalAlignment = Element.ALIGN_CENTER,
+                Padding = 5
+            });
+        }
+
     }
 }
