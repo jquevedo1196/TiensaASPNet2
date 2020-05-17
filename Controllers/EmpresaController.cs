@@ -6,7 +6,7 @@ using tienda_web.Models;
 
 namespace tienda_web.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class EmpresaController : Controller
     {
         private TiendaContext _context;

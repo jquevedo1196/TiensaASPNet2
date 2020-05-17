@@ -2,17 +2,7 @@
 @{
     ViewData["Title"] = "Silo Manager";
 }
-
-<div style="width: 100%; padding-bottom: 20px">
-    <div>
-        <div>
-            <h2>Agregar Herramienta/Dispositivo para entrar al almacén</h2>
-        </div>
-        <div>
-            <a href="~/../Almacen/Entradas/AgregarEntradas/@ViewBag.ProyectoId">Agregar elemento</a>
-        </div>
-    </div>
-</div>
+<h2>Agregar Herramienta/Dispositivo para entrar al almacén</h2>
 
 <form method="POST">
     <div class="form-group">
@@ -21,17 +11,14 @@
     <div class="form-group">
         <label asp-for="ArtModelo" class="form-control">Seleccione un artículo del stock</label>
         @Html.DropDownList("ArtModelo", new SelectList(@ViewBag.Articulos, "Text", "Value"))
-        <span asp-validation-for="ArtModelo" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Cantidad" class="form-control">Cantidad que regresa</label>
         <input type="number" asp-for="Cantidad" min="1" max="100">
-        <span asp-validation-for="Cantidad" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Fecha" class="form-control">Fecha</label>
         <input type="datetime-local" asp-for="Fecha">
-        <span asp-validation-for="Fecha" class="text-danger"></span>
     </div>
     <input type="submit" value="Guardar"/>
 </form>
