@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using tienda_web.Models;
 
 namespace tienda_web.Controllers
@@ -48,13 +49,18 @@ namespace tienda_web.Controllers
         [Route("Proyecto/EditarProyecto/{proyectoId}")]
         public IActionResult EditarProyecto(Proyecto proyecto)
         {
-            proyecto.AuthEntrada = "NO";
-            proyecto.AuthSalida = "NO";
-            ViewBag.Context = _context;
-            _context.Proyectos.Update(proyecto);
-            _context.SaveChanges();
-            RegistraBitacora("Proyectos", "Edición");
-            return View("Proyectos", _context.Proyectos.ToList());
+            if (ModelState.IsValid)
+            {
+                proyecto.AuthEntrada = "NO";
+                proyecto.AuthSalida = "NO";
+                ViewBag.Context = _context;
+                _context.Proyectos.Update(proyecto);
+                _context.SaveChanges();
+                RegistraBitacora("Proyectos", "Edición");
+                return View("Proyectos", _context.Proyectos.ToList());
+            }
+
+            return View();
         }
         
         public IActionResult CrearProyecto()
@@ -79,13 +85,21 @@ namespace tienda_web.Controllers
         [HttpPost]
         public IActionResult CrearProyecto(Proyecto proyecto)
         {
+            ViewBag.Context = _context;
             proyecto.AuthEntrada = "NO"; 
             proyecto.AuthSalida = "NO";
-            ViewBag.Context = _context;
-            _context.Proyectos.Add(proyecto);
             _context.SaveChanges();
-            RegistraBitacora("Proyectos", "Inserción");
-            return View("Proyectos", _context.Proyectos.ToList());
+
+            if (ModelState.IsValid)
+            {
+                ViewBag.Context = _context;
+                _context.Proyectos.Add(proyecto);
+                _context.SaveChanges();
+                RegistraBitacora("Proyectos", "Inserción");
+                return View("Proyectos", _context.Proyectos.ToList());
+            }
+
+            return View();
         }
         
         public void ExecuteQuery(string query)

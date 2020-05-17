@@ -42,12 +42,16 @@ namespace tienda_web.Controllers
         [Route("InvArticulo/EditarInvArticulo/{artModelo}")]
         public IActionResult EditarInvArticulo(InvArticulo invArticulo)
         {
-            invArticulo.CantidadEnAlmacen = invArticulo.CantidadNeta - invArticulo.CantidadPrestada; 
-            ViewBag.Context = _context;
-            _context.InvArticulos.Update(invArticulo);
-            _context.SaveChanges();
-            RegistraBitacora("InvArticulos", "Edición");
-            return View("InvArticulos", _context.InvArticulos.ToList());
+            if (ModelState.IsValid)
+            {
+                invArticulo.CantidadEnAlmacen = invArticulo.CantidadNeta - invArticulo.CantidadPrestada;
+                ViewBag.Context = _context;
+                _context.InvArticulos.Update(invArticulo);
+                _context.SaveChanges();
+                RegistraBitacora("InvArticulos", "Edición");
+                return View("InvArticulos", _context.InvArticulos.ToList());
+            }
+            return View();
         }
 
         public IActionResult CrearInvArticulo()
@@ -66,11 +70,16 @@ namespace tienda_web.Controllers
         [HttpPost]
         public IActionResult CrearInvArticulo(InvArticulo invArticulo)
         {
-            ViewBag.Context = _context;
-            _context.InvArticulos.Add(invArticulo);
-            _context.SaveChanges();
-            RegistraBitacora("InvArticulos", "Inserción");
-            return View("InvArticulos", _context.InvArticulos.ToList());
+            if (ModelState.IsValid)
+            {
+                ViewBag.Context = _context;
+                _context.InvArticulos.Add(invArticulo);
+                _context.SaveChanges();
+                RegistraBitacora("InvArticulos", "Inserción");
+                return View("InvArticulos", _context.InvArticulos.ToList());
+            }
+
+            return View();
         }
 
         public void ExecuteQuery(string query)

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using tienda_web.Models;
 
 namespace tienda_web.Controllers
@@ -66,11 +67,15 @@ namespace tienda_web.Controllers
         [Route("CatArticulo/EditarCatArticulo/{catArticuloId}")]
         public IActionResult EditarCatArticulo(CatArticulo catArticulo)
         {
-            ViewBag.Context = _context;
-            _context.CatArticulos.Update(catArticulo);
-            _context.SaveChanges();
-            RegistraBitacora("CatArticulos", "Edición");
-            return View("CatArticulos", _context.CatArticulos.ToList());
+            if (ModelState.IsValid)
+            {
+                ViewBag.Context = _context;
+                _context.CatArticulos.Update(catArticulo);
+                _context.SaveChanges();
+                RegistraBitacora("CatArticulos", "Edición");
+                return View("CatArticulos", _context.CatArticulos.ToList());
+            }
+            return View();
         }
         
         public IActionResult CrearCatArticulo()
@@ -93,13 +98,19 @@ namespace tienda_web.Controllers
         }
         
         [HttpPost]
-        public IActionResult CrearCatArticulo(CatArticulo catArticulo)
+        [ValidateAntiForgeryToken]
+        public IActionResult CrearCatArticulo([Bind]CatArticulo catArticulo)
         {
-            ViewBag.Context = _context;
-            _context.CatArticulos.Add(catArticulo);
-            _context.SaveChanges();
-            RegistraBitacora("CatArticulos", "Inserción");
-            return View("CatArticulos", _context.CatArticulos.ToList());
+            if (ModelState.IsValid)
+            {
+                ViewBag.Context = _context;
+                _context.CatArticulos.Add(catArticulo);
+                _context.SaveChanges();
+                RegistraBitacora("CatArticulos", "Inserción");
+                return View("CatArticulos", _context.CatArticulos.ToList());
+            }
+
+            return View();
         }
         
         public void ExecuteQuery(string query)

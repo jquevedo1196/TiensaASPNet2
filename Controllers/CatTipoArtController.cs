@@ -44,10 +44,15 @@ namespace tienda_web.Controllers
         [HttpPost]
         public IActionResult CrearTipoArt(CatTipoArt tipoArt)
         {
-            _context.CatTipoArts.Add(tipoArt);
-            _context.SaveChanges();
-            RegistraBitacora("CatTipoArts", "Inserción");
-            return View("CatTipoArts", _context.CatTipoArts.ToList());
+            if (ModelState.IsValid)
+            {
+                _context.CatTipoArts.Add(tipoArt);
+                _context.SaveChanges();
+                RegistraBitacora("CatTipoArts", "Inserción");
+                return View("CatTipoArts", _context.CatTipoArts.ToList());
+            }
+
+            return View();
         }
         
         [Route("CatTipoArt/EditarTipoArt/{tipoArtId}")]
@@ -61,10 +66,15 @@ namespace tienda_web.Controllers
         [Route("CatTipoArt/EditarCatTipoArt/{tipoArtId}")]
         public IActionResult EditarCatTipoArt(CatTipoArt tipoArt)
         {
-            _context.CatTipoArts.Update(tipoArt);
-            _context.SaveChanges();
-            RegistraBitacora("CatTipoArts", "Edición");
-            return View("CatTipoArts", _context.CatTipoArts.ToList());
+            if (ModelState.IsValid)
+            {
+                _context.CatTipoArts.Update(tipoArt);
+                _context.SaveChanges();
+                RegistraBitacora("CatTipoArts", "Edición");
+                return View("CatTipoArts", _context.CatTipoArts.ToList());
+            }
+
+            return View();
         }
         
         public void ExecuteQuery(string query)

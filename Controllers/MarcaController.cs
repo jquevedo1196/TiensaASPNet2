@@ -4,6 +4,7 @@ using System.Xml;
 using Microsoft.Data.SqlClient;
 using tienda_web.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace tienda_web.Controllers
 {
@@ -42,15 +43,21 @@ namespace tienda_web.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         public IActionResult CrearMarca(Marca marca)
         {
             marca.VcMarcaStatus = "AC";
-            _context.Marcas.Add(marca);
-            _context.SaveChanges();
-            RegistraBitacora("Marcas", "Inserción");
-            return View("Marcas", _context.Marcas.ToList());
+
+            if (ModelState.IsValid)
+            {              
+                _context.Marcas.Add(marca);
+                _context.SaveChanges();
+                RegistraBitacora("Marcas", "Inserción");
+                return View("Marcas", _context.Marcas.ToList());
+            }
+
+            return View();
         }
         
         [Route("Marca/EditarMarca/{marcaId}")]
@@ -64,10 +71,15 @@ namespace tienda_web.Controllers
         [Route("Marca/EditarMarca/{marcaId}")]
         public IActionResult EditarMarca(Marca marca)
         {
-            _context.Marcas.Update(marca);
-            _context.SaveChanges();
-            RegistraBitacora("Marcas", "Edición");
-            return View("Marcas", _context.Marcas.ToList());
+            if (ModelState.IsValid)
+            {
+                _context.Marcas.Update(marca);
+                _context.SaveChanges();
+                RegistraBitacora("Marcas", "Edición");
+                return View("Marcas", _context.Marcas.ToList());
+            }
+
+            return View("EditarMarca", marca);
         }
         
         public void ExecuteQuery(string query)

@@ -3,7 +3,17 @@
     ViewData["Title"] = "Silo Manager";
 }
 
-<h2>Catálogo de Artículos</h2>
+<div style="width: 100%; padding-bottom: 20px">
+    <div>
+        <div>
+            <h2>Inventario de Artículos</h2>
+        </div>
+        <div>
+            <a href="~/../InvArticulo/CrearInvArticulo/">Agregar artículo al stock</a>
+        </div>
+    </div>
+</div>
+
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -14,7 +24,7 @@
             <th scope="col">Descripción</th>
             <th scope="col">Tipo de Artículo</th>
             <th scope="col">Cantidad Neta</th>
-            <th scope="col">Cantidad En Almacen</th>
+            <th scope="col">Cantidad En Almacén</th>
             <th scope="col">Cantidad Prestada</th>
             <th scope="col">Editar</th>
         </tr>
@@ -36,8 +46,4 @@
         }
         </tbody>
     </table>
-</div>
-
-<div>
-    <a href="~/../InvArticulo/CrearInvArticulo/">Agregar artículo al stock</a>
 </div>

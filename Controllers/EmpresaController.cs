@@ -45,10 +45,19 @@ namespace tienda_web.Controllers
         [HttpPost]
         public IActionResult CrearEmpresa(Empresa empresa)
         {
-            _context.Empresas.Add(empresa);
-            _context.SaveChanges();
-            RegistraBitacora("Empresas", "Inserción");
-            return View("Empresas", _context.Empresas.ToList());
+            if (ModelState.IsValid)
+            {
+                if (_context.Empresas.Find(empresa.EmpresaRfc) != null)
+                {
+                    ModelState.AddModelError(string.Empty, "El RFC ingresado ya existe en el sistema");
+                    return View("CrearEmpresa");
+                }
+                _context.Empresas.Add(empresa);
+                _context.SaveChanges();
+                RegistraBitacora("Empresas", "Inserción");
+                return View("Empresas", _context.Empresas.ToList());
+            }
+            return View();
         }
         
         [Route("Empresa/EditarEmpresa/{empresaRfc}")]
@@ -62,10 +71,15 @@ namespace tienda_web.Controllers
         [Route("Empresa/EditarEmpresa/{empresaRfc}")]
         public IActionResult EditarEmpresa(Empresa empresa)
         {
-            _context.Empresas.Update(empresa);
-            _context.SaveChanges();
-            RegistraBitacora("Empresas", "Edición");
-            return View("Empresas", _context.Empresas.ToList());
+            if (ModelState.IsValid)
+            {
+                _context.Empresas.Update(empresa);
+                _context.SaveChanges();
+                RegistraBitacora("Empresas", "Edición");
+                return View("Empresas", _context.Empresas.ToList());
+            }
+
+            return View("EditarEmpresa", empresa);
         }
         
         public void ExecuteQuery(string query)
