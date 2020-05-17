@@ -6,13 +6,13 @@ namespace tienda_web.Models
     public class Salida
     {
 
-        [Required(ErrorMessage = "Debe seleccionar el número de modelo.")]
+        //[Required(ErrorMessage = "Debe seleccionar el número de modelo.")]
         public int SalidaId  { get; set; }
 
-        [Required(ErrorMessage = "Debe seleccionar el número de modelo.")]
+        //[Required(ErrorMessage = "Debe seleccionar el número de modelo.")]
         public string ArtModelo { get; set; }
 
-        [Required(ErrorMessage = "Debe seleccionar el proyecto.")]
+        //[Required(ErrorMessage = "Debe seleccionar el proyecto.")]
         public int ProyectoId { get; set; }
 
         [Required(ErrorMessage = "Debe ingresar la cantidad de artículos a préstamo.")]

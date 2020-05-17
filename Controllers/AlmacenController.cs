@@ -74,8 +74,19 @@ namespace tienda_web.Controllers
         [Route("Almacen/Salidas/AgregarSalidas/{proyectoId}")]
         public IActionResult AgregarSalidas(Salida salida)
         {
+            var existencia = _context.InvArticulos
+                .Where(x => x.ArtModelo == salida.ArtModelo)
+                .Select(x => x.CantidadEnAlmacen)
+                .ToArray();
+
             if (ModelState.IsValid)
             {
+                if (existencia[0] < salida.Cantidad)
+                {
+                    ModelState.AddModelError(string.Empty, "La cantidad solicitada excede la del inventario");
+                    return View("Salidas/AgregarSalidas");
+                }
+
                 ViewBag.Context = _context;
                 ViewBag.ProyectoId = salida.ProyectoId;
                 _context.Salidas.Add(salida);
@@ -86,7 +97,7 @@ namespace tienda_web.Controllers
                 return View("Salidas/VerSalidas", salidas);
             }
 
-            return View();
+            return View("Salidas/AgregarSalidas", salida.ProyectoId);
         }
 
         [Route("Almacen/Entradas/VerEntradas/{proyectoId}")]
