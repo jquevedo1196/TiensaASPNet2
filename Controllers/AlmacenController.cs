@@ -73,14 +73,19 @@ namespace tienda_web.Controllers
         [Route("Almacen/Salidas/AgregarSalidas/{proyectoId}")]
         public IActionResult AgregarSalidas(Salida salida)
         {
-            ViewBag.Context = _context;
-            ViewBag.ProyectoId = salida.ProyectoId;
-            _context.Salidas.Add(salida);
-            _context.SaveChanges();
-            ActualizaSalidaStock(salida.ArtModelo, salida.Cantidad);
-            RegistraBitacora("Salidas", "Inserción");
-            List<Salida> salidas = _context.Salidas.Where(salidaOut => salidaOut.ProyectoId == salida.ProyectoId).ToList();
-            return View("Salidas/VerSalidas", salidas);
+            if (ModelState.IsValid)
+            {
+                ViewBag.Context = _context;
+                ViewBag.ProyectoId = salida.ProyectoId;
+                _context.Salidas.Add(salida);
+                _context.SaveChanges();
+                ActualizaSalidaStock(salida.ArtModelo, salida.Cantidad);
+                RegistraBitacora("Salidas", "Inserción");
+                List<Salida> salidas = _context.Salidas.Where(salidaOut => salidaOut.ProyectoId == salida.ProyectoId).ToList();
+                return View("Salidas/VerSalidas", salidas);
+            }
+
+            return View();
         }
 
         [Route("Almacen/Entradas/VerEntradas/{proyectoId}")]
@@ -127,14 +132,19 @@ namespace tienda_web.Controllers
         [Route("Almacen/Entradas/AgregarEntradas/{proyectoId}")]
         public IActionResult AgregarEntradas(Entrada entrada)
         {
-            ViewBag.Context = _context;
-            ViewBag.ProyectoId = entrada.ProyectoId;
-            _context.Entradas.Add(entrada);
-            _context.SaveChanges();
-            ActualizaEntradaStock(entrada.ArtModelo, entrada.Cantidad);
-            RegistraBitacora("Salidas", "Inserción");
-            List<Entrada> entradas = _context.Entradas.Where(entradaOut => entradaOut.ProyectoId == entrada.ProyectoId).ToList();
-            return View("Entradas/VerEntradas", entradas);
+            if (ModelState.IsValid)
+            {
+                ViewBag.Context = _context;
+                ViewBag.ProyectoId = entrada.ProyectoId;
+                _context.Entradas.Add(entrada);
+                _context.SaveChanges();
+                ActualizaEntradaStock(entrada.ArtModelo, entrada.Cantidad);
+                RegistraBitacora("Salidas", "Inserción");
+                List<Entrada> entradas = _context.Entradas.Where(entradaOut => entradaOut.ProyectoId == entrada.ProyectoId).ToList();
+                return View("Entradas/VerEntradas", entradas);
+            }
+
+            return View();
         }
         
         public void ExecuteQuery(string query)
