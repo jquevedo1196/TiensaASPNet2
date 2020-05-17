@@ -19,5 +19,5 @@
         <label asp-for="TipoArtId" class="form-control">Seleccione un tipo de Artículo</label>
         @Html.DropDownList("TipoArtId",new SelectList(@ViewBag.CatTipoArts,"Text","Value"))
     </div>
-    <input type="submit"/>
+    <input type="submit" value="Guardar"/>
 </form>

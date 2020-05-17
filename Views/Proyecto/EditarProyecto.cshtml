@@ -22,5 +22,5 @@
         <label asp-for="UserId" class="form-control">Seleccione una Marca</label>
         @Html.DropDownList("UserId", new SelectList(@ViewBag.AspNetUsers, "Text", "Value"))
     </div>
-    <input type="submit"/>
+    <input type="submit" value="Guardar"/>
 </form>
