@@ -25,7 +25,8 @@ namespace tienda_web.Areas.Identity
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                     options.Password.RequireLowercase = false;
-                }).AddEntityFrameworkStores<tienda_webAuthDbContext>();
+                }).AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<tienda_webAuthDbContext>();
             });
         }
     }

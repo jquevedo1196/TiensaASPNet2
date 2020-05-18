@@ -6,6 +6,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Esquemas\**" />
+    <Compile Remove="Views\Usuarios\**" />
+    <Content Remove="Models\Esquemas\**" />
+    <Content Remove="Views\Usuarios\**" />
+    <EmbeddedResource Remove="Models\Esquemas\**" />
+    <EmbeddedResource Remove="Views\Usuarios\**" />
+    <None Remove="Models\Esquemas\**" />
+    <None Remove="Views\Usuarios\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\AdminRoles.cs" />
+    <Compile Remove="Controllers\LoginController.cs" />
+    <Compile Remove="Controllers\RegistroController.cs" />
+    <Compile Remove="Models\CrearRolModel.cs" />
+    <Compile Remove="Models\Login.cs" />
+    <Compile Remove="Models\Registro.cs" />
+    <Compile Remove="Models\Usuarios.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\_AuthLayout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="iTextSharp" Version="5.5.13.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
