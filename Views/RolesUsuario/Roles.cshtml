@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+@{
+    ViewData["Title"] = "Silo Manager";
+}
+
+<div style="width: 100%; padding-bottom: 20px">
+    <div>
+        <div>
+            <h2>Lista de Roles</h2>
+        </div>
+        <div>
+            <a href="~/../Rolesusuario/CrearRol/">Crear nuevo Rol</a>
+        </div>
+    </div>
+</div>
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre del Rol</th>
+                    <th scope="col">Establecer Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var rol in @Model)
+                {
+                    <tr>
+                        <th scope="row">@rol.Id</th>
+                        <td>@rol.Name</td>
+                        <td><a href="~/../Marca/EditarMarca/@rol.Name">Añadir Usuario</a></td>
+                        @*<td><a href="~/../Marca/BorrarMarca/@marca.MarcaId">Eliminar</a></td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div></div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre del Rol</th>
+                    <th scope="col">Establecer Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+}

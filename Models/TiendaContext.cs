@@ -11,6 +11,8 @@ namespace tienda_web.Models
         public DbSet<InvArticulo> InvArticulos { get; set; }
         public DbSet<Proyecto> Proyectos { get; set; }
         public DbSet<AspNetUser> AspNetUsers { get; set; }
+        public DbSet<AspNetRole> AspNetRole { get; set; }
+        public DbSet<AspNetUserRole>AspNetUserRole { get; set; }
         public DbSet<Salida> Salidas { get; set; }
         public DbSet<Entrada> Entradas { get; set; }
         public DbSet<Parametro> Parametros { get; set; }

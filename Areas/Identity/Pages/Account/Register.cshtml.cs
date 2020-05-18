@@ -24,20 +24,20 @@ namespace tienda_web.Areas.Identity.Pages.Account
         private readonly UserManager<tienda_webUsers> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        //private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<tienda_webUsers> userManager,
             SignInManager<tienda_webUsers> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            IEmailSender emailSender)
+            //RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _roleManager = roleManager;
+            //_roleManager = roleManager;
         }
 
         [BindProperty]
@@ -84,22 +84,23 @@ namespace tienda_web.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "La contraseña no coincide!")]
             public string ConfirmPassword { get; set; }
 
-            public string Name { get; set; }
+            //public string Name { get; set; }
         }
 
-        public void OnGet(string returnUrl = null)
+        //public void OnGet(string returnUrl = null)
+        public async Task OnGetAsync(string returnUrl = null)
         {
-            //ReturnUrl = returnUrl;
-            //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            ViewData["roles"] = _roleManager.Roles.ToList();
             ReturnUrl = returnUrl;
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            //ViewData["roles"] = _roleManager.Roles.ToList();
+            //ReturnUrl = returnUrl;
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            var role = _roleManager.FindByNameAsync(Input.Name).Result;
+            //var role = _roleManager.FindByNameAsync(Input.Name).Result;
             if (ModelState.IsValid)
             {
                 var user = new tienda_webUsers { UserName = Input.UserName, RFC = Input.RFC , Nombres = Input.Nombres, ApPat = Input.ApPat, ApMat = Input.ApMat};
@@ -107,7 +108,7 @@ namespace tienda_web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    await _userManager.AddToRoleAsync(user, role.Name);
+                    //await _userManager.AddToRoleAsync(user, role.Name);
 
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -129,8 +130,9 @@ namespace tienda_web.Areas.Identity.Pages.Account
                     //    await _signInManager.SignInAsync(user, isPersistent: false);
                     //    return LocalRedirect(returnUrl);
                     //}
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    //Para añadir rol
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    //return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)
                 {

@@ -22,13 +22,13 @@ namespace tienda_web.Controllers
             return View(roles);
         }
 
-        public IActionResult Create()
+        public IActionResult CrearRol()
         {
             return View(new IdentityRole());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(IdentityRole role)
+        public async Task<IActionResult> CrearRol(IdentityRole role)
         {
             await _roleManager.CreateAsync(role);
             return RedirectToAction("Index");
