@@ -107,7 +107,7 @@ namespace tienda_web.Controllers
         [Authorize]
         public void ExecuteQuery(string query)
         {
-            SqlConnection conection = new SqlConnection("Server= localhost; Database= webstore; Integrated Security=SSPI; Server=localhost\\SQLEXPRESS01;");
+            SqlConnection conection = new SqlConnection("Server= localhost; Database= webstore; Integrated Security=SSPI; Server=localhost\\sqlexpress;");
             conection.Open();
             SqlCommand command = new SqlCommand(query,conection); // Create a object of SqlCommand class
             command.ExecuteNonQuery();
