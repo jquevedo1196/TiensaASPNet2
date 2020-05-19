@@ -18,7 +18,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace tienda_web.Controllers
 {
-    [Authorize(Roles = "PM, Admin")]
+    [Authorize(Roles = "PM")]
     public class AlmacenController : Controller
     {
         private TiendaContext _context;
@@ -28,7 +28,7 @@ namespace tienda_web.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize(Roles = "PM")]
         public IActionResult Informacion()
         {
             ViewBag.Context = _context;
