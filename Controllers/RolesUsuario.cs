@@ -64,6 +64,8 @@ namespace tienda_web.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        //[Route("RolesUsuario/AgregarUsuario/{roleId}")]
         public async Task<IActionResult> AgregarUsuario(string roleId)
         {
             ViewBag.roleId = roleId;
@@ -102,7 +104,49 @@ namespace tienda_web.Controllers
             }
         }
 
-        public void ExecuteQuery(string query)
+        [HttpPost]
+        public async Task<IActionResult> AgregarUsuario(List<AspNetUserRole> model, string roleId)
+        {
+            var role = await roleManager.FindByIdAsync(roleId);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"No se encontró el rol especificado";
+                return View("NotFound");
+            }
+
+            for (int i =0; i < model.Count; i++)
+            {
+                var user = await userManager.FindByIdAsync(model[i].UserId);
+
+                IdentityResult result = null;
+
+                if (model[i].IsSelected && !(await userManager.IsInRoleAsync(user, role.Name)))
+                {
+                    result = await userManager.AddToRoleAsync(user, role.Name);
+                }
+                else if(!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    result = await userManager.RemoveFromRoleAsync(user, role.Name);
+                }
+                else
+                {
+                    continue;
+                }
+
+                if (result.Succeeded)
+                {
+                    if (i < (model.Count - 1))
+                        continue;
+                    else
+                        return RedirectToAction("AgregarUsuario", new { Id = roleId });
+                }
+            }
+
+            return RedirectToAction("Roles", "RolesUsuario");
+        }
+
+            public void ExecuteQuery(string query)
         {
             SqlConnection conection = new SqlConnection("Server= localhost; Database= webstore; Integrated Security=SSPI; Server=localhost\\sqlexpress;");
             conection.Open();
