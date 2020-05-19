@@ -94,7 +94,7 @@ namespace tienda_web.Controllers
         {
             SqlConnection conection =
                 new SqlConnection(
-                    "Server= localhost; Database= webstore; Integrated Security=SSPI; Server=localhost\\sqlexpress;");
+                    "Server= localhost; Database= webstore; Integrated Security=SSPI; Server=localhost\\SQLEXPRESS01;");
             conection.Open();
             SqlCommand command = new SqlCommand(query, conection); // Create a object of SqlCommand class
             command.ExecuteNonQuery();
