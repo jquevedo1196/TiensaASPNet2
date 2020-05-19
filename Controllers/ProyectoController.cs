@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -9,6 +10,7 @@ using tienda_web.Models;
 
 namespace tienda_web.Controllers
 {
+    [Authorize]
     public class ProyectoController : Controller
     {
         private TiendaContext _context;
@@ -17,14 +19,14 @@ namespace tienda_web.Controllers
         {
             _context = context;
         }
-        
+        [Authorize]
         public IActionResult Proyectos()
         {
             ViewBag.Context = _context;
             RegistraBitacora("Proyectos", "Consulta");
             return View(_context.Proyectos.ToList());
         }
-
+        [Authorize]
         [Route("Proyecto/EditarProyecto/{proyectoId}")]
         public IActionResult EditarProyecto(int proyectoId)
         {
@@ -45,7 +47,7 @@ namespace tienda_web.Controllers
             Proyecto proyecto = _context.Proyectos.Find(proyectoId);
             return View(proyecto);
         }
-        
+        [Authorize]
         [HttpPost]
         [Route("Proyecto/EditarProyecto/{proyectoId}")]
         public IActionResult EditarProyecto(Proyecto proyecto)
@@ -63,7 +65,7 @@ namespace tienda_web.Controllers
 
             return View();
         }
-        
+        [Authorize]
         public IActionResult CrearProyecto()
         {
             var empresasList = new List<SelectListItem>();
@@ -82,7 +84,7 @@ namespace tienda_web.Controllers
             ViewBag.AspNetUsers = userList;
             return View();
         }
-        
+        [Authorize]
         [HttpPost]
         public IActionResult CrearProyecto(Proyecto proyecto)
         {
@@ -102,7 +104,7 @@ namespace tienda_web.Controllers
 
             return View();
         }
-        
+        [Authorize]
         public void ExecuteQuery(string query)
         {
             SqlConnection conection = new SqlConnection("Server= localhost; Database= webstore; Integrated Security=SSPI; Server=localhost\\sqlexpress;");
@@ -111,7 +113,7 @@ namespace tienda_web.Controllers
             command.ExecuteNonQuery();
             conection.Close();
         }
-        
+        [Authorize]
         public void RegistraBitacora(string tabla, string operacion)
         {
             ExecuteQuery($"exec RegistraBitacora {tabla}, {operacion}");
