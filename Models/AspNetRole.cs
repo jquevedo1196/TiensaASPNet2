@@ -8,6 +8,7 @@ namespace tienda_web.Models
 {
     public class AspNetRole
     {
+        [Key]
         [Required(ErrorMessage = "Debe ingresar el nombre del rol")]
         public string Name { get; set; }
     }
