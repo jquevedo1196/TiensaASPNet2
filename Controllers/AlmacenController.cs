@@ -18,8 +18,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace tienda_web.Controllers
 {
-    [Authorize(Roles = "PM")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "PM, Admin")]
     public class AlmacenController : Controller
     {
         private TiendaContext _context;
@@ -29,8 +28,7 @@ namespace tienda_web.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "PM")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "PM, Admin")]
         public IActionResult Informacion()
         {
             ViewBag.Context = _context;
@@ -38,7 +36,7 @@ namespace tienda_web.Controllers
             return View(_context.Proyectos.ToList());
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         [Route("Almacen/Salidas/VerSalidas/{proyectoId}")]
         public IActionResult VerSalidas(int proyectoId)
         {
@@ -48,7 +46,7 @@ namespace tienda_web.Controllers
             return View("Salidas/VerSalidas", salidas);
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         [Route("Almacen/Salidas/AgregarSalidas/{proyectoId}")]
         public IActionResult AgregarSalidas(int proyectoId)
         {
@@ -76,7 +74,7 @@ namespace tienda_web.Controllers
             return View("Salidas/AgregarSalidas");
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         [HttpPost]
         [Route("Almacen/Salidas/AgregarSalidas/{proyectoId}")]
         public IActionResult AgregarSalidas(Salida salida, int proyectoId)
@@ -127,7 +125,7 @@ namespace tienda_web.Controllers
             return View("Salidas/AgregarSalidas", salida.ProyectoId);
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         [Route("Almacen/Entradas/VerEntradas/{proyectoId}")]
         public IActionResult VerEntradas(int proyectoId)
         {
@@ -137,7 +135,7 @@ namespace tienda_web.Controllers
             return View("Entradas/VerEntradas", entradas);
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         [Route("Almacen/Entradas/AgregarEntradas/{proyectoId}")]
         public IActionResult AgregarEntradas(int proyectoId)
         {
@@ -169,7 +167,7 @@ namespace tienda_web.Controllers
             return View("Entradas/AgregarEntradas");
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         [HttpPost]
         [Route("Almacen/Entradas/AgregarEntradas/{proyectoId}")]
         public IActionResult AgregarEntradas(Entrada entrada)
@@ -190,7 +188,7 @@ namespace tienda_web.Controllers
 
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         public void ExecuteQuery(string query)
         {
             SqlConnection conection = new SqlConnection("Server= localhost; Database= webstore; Integrated Security=SSPI; Server=localhost\\sqlexpress;");
@@ -200,27 +198,27 @@ namespace tienda_web.Controllers
             conection.Close();
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         public void RegistraBitacora(string tabla, string operacion)
         {
             ExecuteQuery($"exec RegistraBitacora {tabla}, {operacion}");
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         public void ActualizaSalidaStock(string artModelo, int cantidad)
         {
             string artModeloRender = "'" + artModelo + "'";
             ExecuteQuery($"exec ActualizaSalidaStock {artModeloRender}, {cantidad}");
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         public void ActualizaEntradaStock(string artModelo, int cantidad)
         {
             string artModeloRender = "'" + artModelo + "'";
             ExecuteQuery($"exec ActualizaEntradaStock {artModeloRender}, {cantidad}");
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         [Route("Almacen/GenerarReporteSalida/{proyectoId}")]
         public IActionResult GenerarReportesSalida(int proyectoId)
         {
@@ -231,7 +229,7 @@ namespace tienda_web.Controllers
             return View("Informacion", _context.Proyectos.ToList());
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         [Route("Almacen/GenerarReporteEntrada/{proyectoId}")]
         public IActionResult GenerarReportesEntrada(int proyectoId)
         {
@@ -242,7 +240,7 @@ namespace tienda_web.Controllers
             return View("Informacion", _context.Proyectos.ToList());
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         protected void GeneratePdfFile(int proyectoId, string opt, string pathdb)
         {
             string path = (opt == "Salida")? $@"{pathdb}Reporte-Salida-{DateTime.Now.ToString("dd-MM-yyyy")}_proyecto_{proyectoId}.pdf" : $@"{pathdb}Reporte-Entrada-{DateTime.Now.ToString("dd-MM-yyyy")}_proyecto_{proyectoId}.pdf";
@@ -260,7 +258,7 @@ namespace tienda_web.Controllers
             doc.Close();
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         private PdfPTable Add_Content_To_PDF(PdfPTable tableLayout, int proyectoId, string opt)
         {
             float[] headers =
@@ -380,7 +378,7 @@ namespace tienda_web.Controllers
             return tableLayout;
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         // Method to add single cell to the header  
         private static void AddCellToHeader(PdfPTable tableLayout, string cellText)
         {
@@ -391,7 +389,7 @@ namespace tienda_web.Controllers
             });
         }
 
-        [Authorize(Roles = "PM")]
+        [Authorize(Roles = "PM, Admin")]
         // Method to add single cell to the body  
         private static void AddCellToBody(PdfPTable tableLayout, string cellText)
         {

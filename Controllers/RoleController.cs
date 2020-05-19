@@ -31,7 +31,7 @@ namespace tienda_web.Controllers
         public async Task<IActionResult> CrearRol(IdentityRole role)
         {
             await _roleManager.CreateAsync(role);
-            return RedirectToAction("Index");
+            return RedirectToAction("/");
         }
     }
 }
