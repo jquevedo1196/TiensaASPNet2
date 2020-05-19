@@ -8,7 +8,7 @@ using tienda_web.Models;
 
 namespace tienda_web.Controllers
 {
-    [Authorize(Roles = "PM, Admin")]
+    [Authorize(Roles = "PM")]
     public class InvArticuloController : Controller
     {
         private TiendaContext _context;
@@ -18,7 +18,7 @@ namespace tienda_web.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize(Roles = "PM")]
         public IActionResult InvArticulos()
         {
             ViewBag.Context = _context;
@@ -26,7 +26,7 @@ namespace tienda_web.Controllers
             return View(_context.InvArticulos.ToList());
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize(Roles = "PM")]
         [Route("InvArticulo/EditarInvArticulo/{artModelo}")]
         public IActionResult EditarInvArticulo(string artModelo)
         {
@@ -42,7 +42,7 @@ namespace tienda_web.Controllers
             return View(invArticulo);
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize(Roles = "PM")]
         [HttpPost]
         [Route("InvArticulo/EditarInvArticulo/{artModelo}")]
         public IActionResult EditarInvArticulo(InvArticulo invArticulo)
@@ -59,7 +59,7 @@ namespace tienda_web.Controllers
             return View();
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize(Roles = "PM")]
         public IActionResult CrearInvArticulo()
         {
             var catArticulosList = new List<SelectListItem>();
@@ -73,7 +73,7 @@ namespace tienda_web.Controllers
             return View();
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize(Roles = "PM")]
         [HttpPost]
         public IActionResult CrearInvArticulo(InvArticulo invArticulo)
         {
@@ -89,7 +89,7 @@ namespace tienda_web.Controllers
             return View();
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize(Roles = "PM")]
         public void ExecuteQuery(string query)
         {
             SqlConnection conection =
@@ -101,7 +101,7 @@ namespace tienda_web.Controllers
             conection.Close();
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize(Roles = "PM")]
         public void RegistraBitacora(string tabla, string operacion)
         {
             ExecuteQuery($"exec RegistraBitacora {tabla}, {operacion}");
