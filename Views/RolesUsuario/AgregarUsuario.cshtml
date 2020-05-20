@@ -1,9 +1,9 @@
 ﻿@model List<AspNetUserRole>
 @{
-    var roleId = ViewBag.roleId;
+    var roleName = ViewBag.roleName;
 }
 
-<h1>Agregar Usuario</h1>
+<h1>Agregar usuario al rol: @roleName</h1>
 
 <form method="POST">
     <div class="table-responsive">

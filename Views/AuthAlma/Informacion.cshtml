@@ -1,7 +1,13 @@
-﻿@model List<Proyecto>
+﻿@using Microsoft.AspNetCore.Identity
+@using tienda_web.Areas.Identity.Data
+
+@model List<Proyecto>
 @{
     ViewData["Title"] = "Silo Manager";
 }
+
+@inject SignInManager<tienda_webUsers> SignInManager
+@inject UserManager<tienda_webUsers> UserManager
 
 <h2>Autorización de Salidas/Entradas del Almacén</h2>
 
@@ -20,8 +26,11 @@
                 <th scope="col">Dispositivos/Material regresado del almacén</th>
                 <th scope="col">Autorización de Salida</th>
                 <th scope="col">Autorización de Entrada</th>
-                <th scope="col">Autorizar Salida</th>
-                <th scope="col">Autorizar Entrada</th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th scope="col">Autorizar Salida</th>
+                    <th scope="col">Autorizar Entrada</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -43,13 +52,13 @@
                         <b>@proyecto.AuthEntrada</b>
                     </td>
                     <td>
-                        @if (proyecto.AuthSalida == "NO")
+                        @if ((proyecto.AuthSalida == "NO") && User.IsInRole("Admin"))
                         {
                             <a href="~/../AuthAlma/AutorizarSalida/@proyecto.ProyectoId">Autorizar</a>
                         }
                     </td>
                     <td>
-                        @if (proyecto.AuthEntrada == "NO")
+                        @if ((proyecto.AuthEntrada == "NO") && User.IsInRole("Admin"))
                         {
                             <a href="~/../AuthAlma/AutorizarEntrada/@proyecto.ProyectoId">Autorizar</a>
                         }

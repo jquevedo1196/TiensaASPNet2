@@ -6,7 +6,7 @@ using tienda_web.Models;
 
 namespace tienda_web.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AuthAlmaController : Controller
     {
         private TiendaContext _context;
@@ -16,7 +16,7 @@ namespace tienda_web.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult Informacion()
         {
             ViewBag.Context = _context;
@@ -24,7 +24,7 @@ namespace tienda_web.Controllers
             return View(_context.Proyectos.ToList());
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public void ExecuteQuery(string query)
         {
             SqlConnection conection = new SqlConnection("Server= localhost; Database= webstore; Integrated Security=SSPI; Server=localhost\\sqlexpress;");
@@ -48,7 +48,7 @@ namespace tienda_web.Controllers
             return View("Informacion", _context.Proyectos.ToList());
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("AuthAlma/AutorizarEntrada/{proyectoId}")]
         public IActionResult AutorizarEntrada(int proyectoId)
         {
@@ -62,7 +62,7 @@ namespace tienda_web.Controllers
             return View("Informacion", _context.Proyectos.ToList());
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public void RegistraBitacora(string tabla, string operacion)
         {
             ExecuteQuery($"exec RegistraBitacora {tabla}, {operacion}");

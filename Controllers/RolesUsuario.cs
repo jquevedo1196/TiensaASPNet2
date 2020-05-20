@@ -65,10 +65,10 @@ namespace tienda_web.Controllers
         }
 
         [HttpGet]
-        //[Route("RolesUsuario/AgregarUsuario/{roleId}")]
         public async Task<IActionResult> AgregarUsuario(string roleId)
         {
-            ViewBag.roleId = roleId;
+            //ViewBag.roleId = roleId;
+            //ViewBag.roleName = roleManager.FindByIdAsync(roleId);
 
             var role = await roleManager.FindByIdAsync(roleId);
 
@@ -79,6 +79,8 @@ namespace tienda_web.Controllers
             }
             else
             {
+                ViewBag.roleName = role.Name;
+
                 var model = new List<AspNetUserRole>();
 
                 foreach(var user in userManager.Users)
@@ -98,6 +100,7 @@ namespace tienda_web.Controllers
                         rol.IsSelected = false;
                     }
                     model.Add(rol);
+                    RegistraBitacora("AspNetRoles", "Consulta");
                 }
 
                 return View(model);
@@ -137,7 +140,10 @@ namespace tienda_web.Controllers
                 if (result.Succeeded)
                 {
                     if (i < (model.Count - 1))
+                    {
+                        RegistraBitacora("AspNetRoles", "Inserción");
                         continue;
+                    }
                     else
                         return RedirectToAction("AgregarUsuario", new { Id = roleId });
                 }
