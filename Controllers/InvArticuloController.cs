@@ -26,7 +26,7 @@ namespace tienda_web.Controllers
             return View(_context.InvArticulos.ToList());
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize(Roles = "Admin")]
         [Route("InvArticulo/EditarInvArticulo/{artModelo}")]
         public IActionResult EditarInvArticulo(string artModelo)
         {
@@ -42,7 +42,7 @@ namespace tienda_web.Controllers
             return View(invArticulo);
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("InvArticulo/EditarInvArticulo/{artModelo}")]
         public IActionResult EditarInvArticulo(InvArticulo invArticulo)
@@ -59,7 +59,7 @@ namespace tienda_web.Controllers
             return View();
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult CrearInvArticulo()
         {
             var catArticulosList = new List<SelectListItem>();
@@ -73,7 +73,7 @@ namespace tienda_web.Controllers
             return View();
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CrearInvArticulo(InvArticulo invArticulo)
         {

@@ -9,7 +9,7 @@ using tienda_web.Models;
 
 namespace tienda_web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class CatArticuloController : Controller
     {
         private TiendaContext _context;
@@ -18,7 +18,8 @@ namespace tienda_web.Controllers
         {
             _context = context;
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public IActionResult CatArticulos()
         {
             ViewBag.Context = _context;
@@ -26,6 +27,7 @@ namespace tienda_web.Controllers
             return View(_context.CatArticulos.ToList());
         }
 
+        [Authorize(Roles = "Admin")]
         [Route("CatArticulo/BorrarCatArticulo/{catArticuloId}")]
         public IActionResult BorrarCatArticulo(int catArticuloId)
         {
@@ -41,7 +43,8 @@ namespace tienda_web.Controllers
             RegistraBitacora("CatArticulos", "Borrado");
             return View("CatArticulos", _context.CatArticulos.ToList());
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [Route("CatArticulo/EditarCatArticulo/{catArticuloId}")]
         public IActionResult EditarCatArticulo(int catArticuloId)
         {
@@ -62,7 +65,8 @@ namespace tienda_web.Controllers
             CatArticulo catArticulo = _context.CatArticulos.Find(catArticuloId);
             return View(catArticulo);
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("CatArticulo/EditarCatArticulo/{catArticuloId}")]
         public IActionResult EditarCatArticulo(CatArticulo catArticulo)
@@ -77,7 +81,8 @@ namespace tienda_web.Controllers
             }
             return View();
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public IActionResult CrearCatArticulo()
         {
             var marcasLists = new List<SelectListItem>();
@@ -96,7 +101,8 @@ namespace tienda_web.Controllers
             ViewBag.CatTipoArts = tipoArtsLists;
             return View();
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CrearCatArticulo([Bind]CatArticulo catArticulo)

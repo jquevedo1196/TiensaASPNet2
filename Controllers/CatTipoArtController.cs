@@ -1,10 +1,12 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using tienda_web.Models;
 
 namespace tienda_web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CatTipoArtController: Controller
     {
         private TiendaContext _context;
@@ -13,14 +15,16 @@ namespace tienda_web.Controllers
         {
             _context = context;
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public IActionResult CatTipoArts()
         {
             ViewBag.Context = _context;
             RegistraBitacora("CatTipoArts", "Consulta");
             return View(_context.CatTipoArts.ToList());
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [Route("CatTipoArt/EliminarTipoArt/{tipoArtId}")]
         public IActionResult EliminarCatTipoArt(int tipoArtId)
         {
@@ -35,12 +39,14 @@ namespace tienda_web.Controllers
             RegistraBitacora("CatTipoArts", "Borrado");
             return View("CatTipoArts", _context.CatTipoArts.ToList());
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public IActionResult CrearTipoArt()
         {
             return View();
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CrearTipoArt(CatTipoArt tipoArt)
         {
@@ -54,14 +60,16 @@ namespace tienda_web.Controllers
 
             return View();
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [Route("CatTipoArt/EditarTipoArt/{tipoArtId}")]
         public IActionResult EditarTipoArt(int tipoArtId)
         {
             CatTipoArt tipoArt = _context.CatTipoArts.Find(tipoArtId);
             return View(tipoArt);
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("CatTipoArt/EditarCatTipoArt/{tipoArtId}")]
         public IActionResult EditarCatTipoArt(CatTipoArt tipoArt)

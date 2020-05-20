@@ -6,7 +6,7 @@ using tienda_web.Models;
 
 namespace tienda_web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Admin")]
     public class EmpresaController : Controller
     {
         private TiendaContext _context;
@@ -15,13 +15,15 @@ namespace tienda_web.Controllers
         {
             _context = context;
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Empresas()
         {
             RegistraBitacora("Empresas", "Consulta");
             return View(_context.Empresas.ToList());
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [Route("Empresa/EliminarEmpresa/{empresaRfc}")]
         public IActionResult EliminarEmpresa(string empresaRfc)
         {
@@ -36,12 +38,14 @@ namespace tienda_web.Controllers
             RegistraBitacora("Empresas", "Borrado");
             return View("Empresas", _context.Empresas.ToList());
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public IActionResult CrearEmpresa()
         {
             return View();
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CrearEmpresa(Empresa empresa)
         {
@@ -59,14 +63,16 @@ namespace tienda_web.Controllers
             }
             return View();
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [Route("Empresa/EditarEmpresa/{empresaRfc}")]
         public IActionResult EditarEmpresa(string empresaRfc)
         {
             Empresa empresa = _context.Empresas.Find(empresaRfc);
             return View(empresa);
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("Empresa/EditarEmpresa/{empresaRfc}")]
         public IActionResult EditarEmpresa(Empresa empresa)
@@ -81,7 +87,8 @@ namespace tienda_web.Controllers
 
             return View("EditarEmpresa", empresa);
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public void ExecuteQuery(string query)
         {
             SqlConnection conection = new SqlConnection("Server= localhost; Database= webstore; Integrated Security=SSPI; Server=localhost\\sqlexpress;");
@@ -90,7 +97,8 @@ namespace tienda_web.Controllers
             command.ExecuteNonQuery();
             conection.Close();
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public void RegistraBitacora(string tabla, string operacion)
         {
             ExecuteQuery($"exec RegistraBitacora {tabla}, {operacion}");

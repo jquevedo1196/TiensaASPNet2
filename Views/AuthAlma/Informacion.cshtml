@@ -52,16 +52,10 @@
                         <b>@proyecto.AuthEntrada</b>
                     </td>
                     <td>
-                        @if ((proyecto.AuthSalida == "NO") && User.IsInRole("Admin"))
-                        {
-                            <a href="~/../AuthAlma/AutorizarSalida/@proyecto.ProyectoId">Autorizar</a>
-                        }
+                        <a href="~/../AuthAlma/AutorizarSalida/@proyecto.ProyectoId">Autorizar</a>
                     </td>
                     <td>
-                        @if ((proyecto.AuthEntrada == "NO") && User.IsInRole("Admin"))
-                        {
-                            <a href="~/../AuthAlma/AutorizarEntrada/@proyecto.ProyectoId">Autorizar</a>
-                        }
+                        <a href="~/../AuthAlma/AutorizarEntrada/@proyecto.ProyectoId">Autorizar</a>
                     </td>
                 </tr>
             }

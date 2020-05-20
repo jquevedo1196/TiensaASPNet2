@@ -1,4 +1,10 @@
-﻿@model List<InvArticulo>
+﻿@using Microsoft.AspNetCore.Identity
+@using tienda_web.Areas.Identity.Data
+
+@inject SignInManager<tienda_webUsers> SignInManager
+@inject UserManager<tienda_webUsers> UserManager
+
+@model List<InvArticulo>
 @{
     ViewData["Title"] = "Silo Manager";
 }
@@ -8,30 +14,37 @@
         <div>
             <h2>Inventario de Artículos</h2>
         </div>
-        <div>
-            <a href="~/../InvArticulo/CrearInvArticulo/">Agregar artículo al stock</a>
-        </div>
+        @if (User.IsInRole("Admin"))
+        {
+            <div>
+                <a href="~/../InvArticulo/CrearInvArticulo/">Agregar artículo al stock</a>
+            </div>
+        }
+
     </div>
 </div>
 
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
-        <tr>
-            <th scope="col">Modelo/Serie</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Marca</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">Tipo de Artículo</th>
-            <th scope="col">Cantidad Neta</th>
-            <th scope="col">Cantidad En Almacén</th>
-            <th scope="col">Cantidad Prestada</th>
-            <th scope="col">Editar</th>
-        </tr>
+            <tr>
+                <th scope="col">Modelo/Serie</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Tipo de Artículo</th>
+                <th scope="col">Cantidad Neta</th>
+                <th scope="col">Cantidad En Almacén</th>
+                <th scope="col">Cantidad Prestada</th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th scope="col">Editar</th>
+                }
+            </tr>
         </thead>
         <tbody>
-        @foreach (var invArticulo in @Model)
-        {
+            @foreach (var invArticulo in @Model)
+            {
             <tr>
                 <th scope="row">@invArticulo.ArtModelo</th>
                 <td>@ViewBag.Context.CatArticulos.Find(invArticulo.ArtId).ArtNombre</td>
@@ -41,9 +54,12 @@
                 <td>@invArticulo.CantidadNeta</td>
                 <td>@invArticulo.CantidadEnAlmacen</td>
                 <td>@invArticulo.CantidadPrestada</td>
-                <td><a href="~/../InvArticulo/EditarInvArticulo/@invArticulo.ArtModelo">Editar</a></td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td><a href="~/../InvArticulo/EditarInvArticulo/@invArticulo.ArtModelo">Editar</a></td>
+                }
             </tr>
-        }
+            }
         </tbody>
     </table>
 </div>

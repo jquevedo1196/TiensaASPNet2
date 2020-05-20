@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace tienda_web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class MarcaController : Controller
     {
         private TiendaContext _context;
@@ -17,13 +17,15 @@ namespace tienda_web.Controllers
         {
             _context = context;
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Marcas()
         {
             RegistraBitacora("Marcas", "Consulta");
             return View(_context.Marcas.ToList());
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [Route("Marca/BorrarMarca/{marcaId}")]
         public IActionResult BorrarMarca(int marcaId)
         {
@@ -38,12 +40,14 @@ namespace tienda_web.Controllers
             RegistraBitacora("Marcas", "Borrado");
             return View("Marcas",_context.Marcas.ToList());
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public IActionResult CrearMarca()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CrearMarca(Marca marca)
         {
@@ -59,14 +63,16 @@ namespace tienda_web.Controllers
 
             return View();
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [Route("Marca/EditarMarca/{marcaId}")]
         public IActionResult EditarMarca(int marcaId)
         {
             Marca marca = _context.Marcas.Find(marcaId);
             return View(marca);
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("Marca/EditarMarca/{marcaId}")]
         public IActionResult EditarMarca(Marca marca)
@@ -81,7 +87,8 @@ namespace tienda_web.Controllers
 
             return View("EditarMarca", marca);
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public void ExecuteQuery(string query)
         {
             SqlConnection conection = new SqlConnection("Server= localhost; Database= webstore; Integrated Security=SSPI; Server=localhost\\sqlexpress;");
@@ -90,7 +97,8 @@ namespace tienda_web.Controllers
             command.ExecuteNonQuery();
             conection.Close();
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public void RegistraBitacora(string tabla, string operacion)
         {
             ExecuteQuery($"exec RegistraBitacora {tabla}, {operacion}");

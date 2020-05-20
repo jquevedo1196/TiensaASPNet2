@@ -7,48 +7,53 @@
     <ul class="navbar-nav">
         @if (SignInManager.IsSignedIn(User))
         {
-        <ul class="navbar-nav flex-grow-1">
+            <ul class="navbar-nav flex-grow-1">
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="~/../Empresa/Empresas">Empresas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="~/../CatTipoArt/CatTipoArts">Tipos de artículos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="~/../CatArticulo/CatArticulos">Catálogo de artículos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="~/../Marca/Marcas">Marcas</a>
+                    </li>
+                }
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../InvArticulo/InvArticulos">Inventario</a>
+                </li>
+                @if (User.IsInRole("Admin") || User.IsInRole("PM"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="~/../Proyecto/Proyectos">Proyectos</a>
+                    </li>
+                }
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../Almacen/Informacion">Almacen</a>
+                </li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="~/../AuthAlma/Informacion">Admin</a>
+                    </li>
+                }
+            </ul>
             @if (User.IsInRole("Admin"))
             {
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="~/../Empresa/Empresas">Empresas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="~/../CatTipoArt/CatTipoArts">Tipos de artículos</a>
+                    <em><strong><a class ="nav-link text-dark" href="~/../RolesUsuario/Roles">@UserManager.GetUserName(User)</a></strong></em>
                 </li>
             }
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="~/../CatArticulo/CatArticulos">Catálogo de artículos</a>
-            </li>
-            @if (User.IsInRole("Admin"))
+            else
             {
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="~/../Marca/Marcas">Marcas</a>
+                    <em><strong><a class ="nav-link text-dark">@UserManager.GetUserName(User)</a></strong></em>
                 </li>
             }
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="~/../InvArticulo/InvArticulos">Inventario</a>
-            </li>
-            @if (User.IsInRole("Admin") || User.IsInRole("PM"))
-            {
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="~/../Proyecto/Proyectos">Proyectos</a>
-                </li>
-            }
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="~/../Almacen/Informacion">Almacen</a>
-            </li>
-            @if (User.IsInRole("Admin") || User.IsInRole("PM"))
-            {
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="~/../AuthAlma/Informacion">Admin</a>
-                </li>
-            }
-        </ul>
-
-            <li class="nav-item">
-                <em><strong><a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)</a></strong></em>
-            </li>
             <li class="nav-item">
                 <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "", new { area = "" })">
                     <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Cerrar sesión</button>
