@@ -183,12 +183,11 @@ namespace tienda_web.Controllers
             {
                 if(entrada.Cantidad > prestado[0])
                 {
-                    ModelState.AddModelError(string.Empty, "La cantidad que eligió devolver excede de la cantidad prestada.");
-                    ViewBag.ProyectoId = entrada.ProyectoId;
-                    var salidas = _context.Salidas.Where(en => en.ProyectoId == entrada.ProyectoId);
+                    ModelState.AddModelError(string.Empty, "La cantidad que eligió devolver, excede de la cantidad prestada");
+                    var sals = _context.Salidas.Where(en => en.ProyectoId == entrada.ProyectoId);
                     var ents = _context.Entradas.Where(en => en.ProyectoId == entrada.ProyectoId);
                     List<string> entradasModels = ents.Select(e => e.ArtModelo).ToList();
-                    List<string> salidasModels = salidas.Select(s => s.ArtModelo).ToList();
+                    List<string> salidasModels = sals.Select(s => s.ArtModelo).ToList();
                     var invArticulosList = new List<SelectListItem>();
                     var invArticulos1 = _context.InvArticulos.Where(x => !entradasModels.Contains(x.ArtModelo)).ToList();
                     var invArticulos2 = _context.InvArticulos.Where(x => salidasModels.Contains(x.ArtModelo)).ToList();
@@ -209,7 +208,7 @@ namespace tienda_web.Controllers
                     }
                     ViewBag.Articulos = invArticulosList;
                     ViewBag.Context = _context;
-                    return View("Entradas/VerEntradas", entrada);
+                    return View("Entradas/AgregarEntradas", entrada);
                 }
 
                 ViewBag.Context = _context;
