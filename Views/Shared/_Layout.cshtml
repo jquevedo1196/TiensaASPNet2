@@ -19,16 +19,19 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a href="~/"><img class="card-img-top" src="~/images/logo.png" style="width: 118.8px; height: 65.7px;"
-                                                             asp-append-version="true"/></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial.cshtml"/>
-                </div>
-            </div>
+                @*<a class="nav-link text-dark" href="~/">Silo Manager</a>*@
+                <a href="~/">
+                    <img class="card-img-top" href="~/" src="~/images/logo.png" style="width: 134.64px; height: 74.46px;"
+                         asp-append-version="true" />
+                </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <partial name="_LoginPartial.cshtml" />
+                    </div>
+</div>
         </nav>
     </header>
     <div class="container">
