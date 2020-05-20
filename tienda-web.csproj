@@ -47,7 +47,6 @@
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
-    <_ContentIncludedByDefault Remove="wwwroot\images\onlineshopping.gif" />
     <_ContentIncludedByDefault Remove="Views\Usuario\CrearUsuario.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Usuario\Usuarios.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Producto\BusquedaProducto.cshtml" />
@@ -148,6 +147,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

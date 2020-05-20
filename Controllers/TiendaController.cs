@@ -16,6 +16,7 @@ namespace tienda_web.Controllers
         }
         
         // GET
+        [Authorize]
         public IActionResult Index()
         {
             return View();

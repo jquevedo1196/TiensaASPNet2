@@ -7,41 +7,41 @@
     <ul class="navbar-nav">
         @if (SignInManager.IsSignedIn(User))
         {
-            <ul class="navbar-nav flex-grow-1">
-                @if (User.IsInRole("Admin"))
-                {
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../Empresa/Empresas">Empresas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../CatTipoArt/CatTipoArts">Tipos de artículos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../CatArticulo/CatArticulos">Catálogo de artículos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../Marca/Marcas">Marcas</a>
-                    </li>
-                }
+        <ul class="navbar-nav flex-grow-1">
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../Empresa/Empresas">Empresas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../CatTipoArt/CatTipoArts">Tipos de artículos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../CatArticulo/CatArticulos">Catálogo de artículos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../Marca/Marcas">Marcas</a>
+                </li>
+            }
+            @if (User.IsInRole("Admin") || User.IsInRole("PM"))
+            {
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="~/../InvArticulo/InvArticulos">Inventario</a>
                 </li>
-                @if (User.IsInRole("Admin") || User.IsInRole("PM"))
-                {
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../Proyecto/Proyectos">Proyectos</a>
-                    </li>
-                }
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../Proyecto/Proyectos">Proyectos</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="~/../Almacen/Informacion">Almacen</a>
                 </li>
-                @if (User.IsInRole("Admin"))
-                {
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="~/../AuthAlma/Informacion">Admin</a>
-                    </li>
-                }
-            </ul>
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="~/../AuthAlma/Informacion">Admin</a>
+                </li>
+            }
+        </ul>
             @if (User.IsInRole("Admin"))
             {
                 <li class="nav-item">

@@ -85,6 +85,7 @@ namespace tienda_web.Controllers
             return View("CatTipoArts", _context.CatTipoArts.ToList());;
         }
         
+        [Authorize]
         public void ExecuteQuery(string query)
         {
             SqlConnection conection = new SqlConnection("Server= localhost; Database= webstore; Integrated Security=SSPI; Server=localhost\\sqlexpress;");
@@ -93,6 +94,7 @@ namespace tienda_web.Controllers
             command.ExecuteNonQuery(); conection.Close();
         }
         
+        [Authorize]
         public void RegistraBitacora(string tabla, string operacion)
         {
             ExecuteQuery($"exec RegistraBitacora {tabla}, {operacion}");

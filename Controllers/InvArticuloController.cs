@@ -89,7 +89,7 @@ namespace tienda_web.Controllers
             return View();
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize]
         public void ExecuteQuery(string query)
         {
             SqlConnection conection =
@@ -101,7 +101,7 @@ namespace tienda_web.Controllers
             conection.Close();
         }
 
-        [Authorize(Roles = "PM, Admin")]
+        [Authorize]
         public void RegistraBitacora(string tabla, string operacion)
         {
             ExecuteQuery($"exec RegistraBitacora {tabla}, {operacion}");
