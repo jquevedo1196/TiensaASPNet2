@@ -139,7 +139,8 @@ namespace tienda_web.Controllers
                     if (i < (model.Count - 1))
                         continue;
                     else
-                        return RedirectToAction("AgregarUsuario", new { Id = roleId });
+                        TempData["Success"] = "Los roles han sido modificados con exito!\nPor favor reinicia la sesión del usuario en cuestión para aplicar los ajustes!";
+                    return RedirectToAction("Roles", "RolesUsuario");
                 }
             }
 

@@ -3,6 +3,11 @@
     ViewData["Title"] = "Silo Manager";
 }
 
+@if (TempData["Success"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
+}
+
 <div style="width: 100%; padding-bottom: 20px">
     <div>
         <div>
@@ -31,8 +36,10 @@
                     <tr>
                         <th scope="row">@rol.Id</th>
                         <td>@rol.Name</td>
-                        <td><a asp-action="AgregarUsuario" asp-controller="RolesUsuario"
-                               asp-route-roleId="@rol.Id" class="btn btn-link">Añadir Usuario</a></td>
+                        <td>
+                            <a asp-action="AgregarUsuario" asp-controller="RolesUsuario"
+                               asp-route-roleId="@rol.Id" class="btn btn-link">Añadir Usuario</a>
+                        </td>
                         @*<td><a href="~/../RolesUsuario/AgregarUsuario/@rol.Id">Añadir Usuario</a></td>*@
                         @*<td><a href="~/../Marca/BorrarMarca/@marca.MarcaId">Eliminar</a></td>*@
                     </tr>
