@@ -38,10 +38,8 @@
                         <td>@rol.Name</td>
                         <td>
                             <a asp-action="AgregarUsuario" asp-controller="RolesUsuario"
-                               asp-route-roleId="@rol.Id" class="btn btn-link">Añadir Usuario</a>
+                               asp-route-roleId="@rol.Id" class="btn btn-link">Administrar Usuarios</a>
                         </td>
-                        @*<td><a href="~/../RolesUsuario/AgregarUsuario/@rol.Id">Añadir Usuario</a></td>*@
-                        @*<td><a href="~/../Marca/BorrarMarca/@marca.MarcaId">Eliminar</a></td>*@
                     </tr>
                 }
             </tbody>

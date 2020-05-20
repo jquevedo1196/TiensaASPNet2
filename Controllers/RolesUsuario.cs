@@ -11,9 +11,11 @@ using Org.BouncyCastle.Security;
 using tienda_web.Data;
 using tienda_web.Models;
 using tienda_web.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace tienda_web.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class RolesUsuario : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -25,6 +27,7 @@ namespace tienda_web.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Roles()
         {
             var roles = roleManager.Roles;
@@ -32,11 +35,13 @@ namespace tienda_web.Controllers
             return View(roles);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult CrearRol()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task <IActionResult> CrearRol(AspNetRole model)
         {
@@ -64,6 +69,7 @@ namespace tienda_web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> AgregarUsuario(string roleId)
         {
@@ -107,6 +113,7 @@ namespace tienda_web.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AgregarUsuario(List<AspNetUserRole> model, string roleId)
         {
