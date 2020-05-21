@@ -255,7 +255,7 @@ namespace tienda_web.Controllers
             ExecuteQuery($"exec ActualizaEntradaStock {artModeloRender}, {cantidad}");
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "PM, Admin")]
         [Route("Almacen/GenerarReporteSalida/{proyectoId}")]
         public IActionResult GenerarReportesSalida(int proyectoId)
         {
