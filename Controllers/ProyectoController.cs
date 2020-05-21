@@ -56,8 +56,7 @@ namespace tienda_web.Controllers
         [Route("Proyecto/EditarProyecto/{proyectoId}")]
         public IActionResult EditarProyecto(Proyecto proyecto)
         {
-            if (ModelState.IsValid)
-            {
+            
                 proyecto.AuthEntrada = "NO";
                 proyecto.AuthSalida = "NO";
                 ViewBag.Context = _context;
@@ -65,9 +64,6 @@ namespace tienda_web.Controllers
                 _context.SaveChanges();
                 RegistraBitacora("Proyectos", "Edición");
                 return View("Proyectos", _context.Proyectos.ToList());
-            }
-
-            return View();
         }
 
         [Authorize(Roles = "PM, Admin")]
