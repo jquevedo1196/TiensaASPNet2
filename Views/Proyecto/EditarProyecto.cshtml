@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         <label asp-for="ProyectoName" class="form-control">Nombre del Proyecto</label>
-        <input type="text" asp-for="ProyectoName" value="@Model.ProyectoName">
+        <input type="text" asp-for="ProyectoName" value="@Model.ProyectoName" required>
         <span asp-validation-for="ProyectoName" class="text-danger"></span>
     </div>
     <div class="form-group">
