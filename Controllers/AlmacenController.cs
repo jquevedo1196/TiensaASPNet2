@@ -90,7 +90,8 @@ namespace tienda_web.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "La cantidad solicitada excede la del inventario");
                     ViewBag.ProyectoId = proyectoId;
-                    List<string> salidasModels = _context.Salidas.Where(sa => sa.ProyectoId == proyectoId).Select(s => s.ArtModelo).ToList();
+                    List<string> salidasModels = _context.Salidas.Where(sa => sa.ProyectoId == proyectoId)
+                        .Select(s => s.ArtModelo).ToList();
                     var invArticulosList = new List<SelectListItem>();
                     var invArticulos = _context.InvArticulos.Where(x => !salidasModels.Contains(x.ArtModelo)).ToList();
                     var catArticulos = _context.CatArticulos.ToList();
@@ -103,7 +104,10 @@ namespace tienda_web.Controllers
                             {
                                 if (elemento.CantidadEnAlmacen > 0)
                                 {
-                                    invArticulosList.Add(new SelectListItem() { Text = elemento.ArtModelo, Value = elemento.ArtModelo + " " + articulo.ArtNombre });
+                                    invArticulosList.Add(new SelectListItem()
+                                    {
+                                        Text = elemento.ArtModelo, Value = elemento.ArtModelo + " " + articulo.ArtNombre
+                                    });
                                 }
                             }
                         }
@@ -113,18 +117,20 @@ namespace tienda_web.Controllers
                     ViewBag.Context = _context;
                     return View("Salidas/AgregarSalidas", salida);
                 }
+
                 ViewBag.Context = _context;
                 ViewBag.ProyectoId = salida.ProyectoId;
                 _context.Salidas.Add(salida);
                 _context.SaveChanges();
                 ActualizaSalidaStock(salida.ArtModelo, salida.Cantidad);
                 RegistraBitacora("Salidas", "Inserción");
-                List<Salida> salidas = _context.Salidas.Where(salidaOut => salidaOut.ProyectoId == salida.ProyectoId).ToList();
+                List<Salida> salidas = _context.Salidas.Where(salidaOut => salidaOut.ProyectoId == salida.ProyectoId)
+                    .ToList();
+
                 return View("Salidas/VerSalidas", salidas);
-
             }
-
-            return View("Salidas/AgregarSalidas", salida.ProyectoId);
+            
+            return View("Salidas/AgregarSalidas");
         }
 
         [Authorize(Roles = "PM, Admin")]
@@ -221,8 +227,7 @@ namespace tienda_web.Controllers
                 return View("Entradas/VerEntradas", entradas);
             }
 
-            return View();
-
+            return View("/Entradas/AgregarEntradas");
         }
 
         [Authorize]

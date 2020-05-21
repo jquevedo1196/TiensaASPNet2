@@ -3,9 +3,9 @@
     ViewData["Title"] = "Silo Manager";
 }
 
-@if (TempData["Success"] != null)
+@if (TempData["Danger"] != null)
 {
-    <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
+    <p class="alert alert-danger" id="dangerMessage">@TempData["Danger"]</p>
 }
 
 <div style="width: 100%; padding-bottom: 20px">

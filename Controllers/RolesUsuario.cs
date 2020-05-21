@@ -80,8 +80,8 @@ namespace tienda_web.Controllers
 
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"No se encontró el rol especificado.";
-                return View("NotFound");
+                TempData["Danger"] = $"No se encontró el Rol especificado";
+                return View("Roles");
             }
             else
             {
@@ -121,8 +121,8 @@ namespace tienda_web.Controllers
 
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"No se encontró el rol especificado";
-                return View("NotFound");
+                TempData["Danger"] = $"No se encontró el Rol especificado";
+                return View("Roles");
             }
 
             for (int i =0; i < model.Count; i++)
