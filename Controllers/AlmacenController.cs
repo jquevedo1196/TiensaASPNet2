@@ -83,6 +83,8 @@ namespace tienda_web.Controllers
                 .Where(x => x.ArtModelo == salida.ArtModelo)
                 .Select(x => x.CantidadEnAlmacen)
                 .ToArray();
+            
+            salida.Fecha = DateTime.Now;
 
             if (ModelState.IsValid)
             {
@@ -148,6 +150,7 @@ namespace tienda_web.Controllers
         public IActionResult AgregarEntradas(int proyectoId)
         {
             ViewBag.ProyectoId = proyectoId;
+            ViewBag.Fecha = DateTime.Now;
             var salidas = _context.Salidas.Where(en => en.ProyectoId == proyectoId);
             var entradas = _context.Entradas.Where(en => en.ProyectoId == proyectoId);
             List<string> entradasModels = entradas.Select(e => e.ArtModelo).ToList();
@@ -184,6 +187,8 @@ namespace tienda_web.Controllers
                 .Where(p => p.ArtModelo == entrada.ArtModelo)
                 .Select(p => p.Cantidad)
                 .ToArray();
+            
+            entrada.Fecha = DateTime.Now;
 
             if (ModelState.IsValid)
             {

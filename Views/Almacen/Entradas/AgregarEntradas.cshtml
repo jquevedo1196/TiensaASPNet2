@@ -21,10 +21,10 @@
         <input type="number" asp-for="Cantidad" min="1" max="100">
         <span asp-validation-for="Cantidad" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <!--<div class="form-group">
         <label asp-for="Fecha" class="form-control">Fecha</label>
-        <input type="datetime-local" asp-for="Fecha">
+        <input type="datetime-local" asp-for="Fecha" value="@ViewBag.Fecha">
         <span asp-validation-for="Fecha" class="text-danger"></span>
-    </div>
+    </div>-->
     <input type="submit" value="Guardar" />
 </form>
