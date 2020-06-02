@@ -181,7 +181,7 @@ namespace tienda_web.Controllers
         [Authorize(Roles = "PM, Admin")]
         [HttpPost]
         [Route("Almacen/Entradas/AgregarEntradas/{proyectoId}")]
-        public IActionResult AgregarEntradas(Entrada entrada)
+        public IActionResult AgregarEntradas(Entrada entrada, int proyectoId)
         {
             var prestado = _context.Salidas
                 .Where(p => p.ArtModelo == entrada.ArtModelo)
@@ -192,13 +192,16 @@ namespace tienda_web.Controllers
 
             if (ModelState.IsValid)
             {
-                if(entrada.Cantidad > prestado[0])
+                if (entrada.Cantidad > prestado[0])
                 {
-                    ModelState.AddModelError(string.Empty, "La cantidad que eligió devolver, excede de la cantidad prestada");
-                    var sals = _context.Salidas.Where(en => en.ProyectoId == entrada.ProyectoId);
-                    var ents = _context.Entradas.Where(en => en.ProyectoId == entrada.ProyectoId);
+                    ModelState.AddModelError(string.Empty,
+                        "La cantidad que eligió devolver, excede de la cantidad prestada");
+                    ViewBag.ProyectoId = proyectoId;
+                    ViewBag.Fecha = DateTime.Now;
+                    var salidas = _context.Salidas.Where(en => en.ProyectoId == proyectoId);
+                    var ents = _context.Entradas.Where(en => en.ProyectoId == proyectoId);
                     List<string> entradasModels = ents.Select(e => e.ArtModelo).ToList();
-                    List<string> salidasModels = sals.Select(s => s.ArtModelo).ToList();
+                    List<string> salidasModels = salidas.Select(s => s.ArtModelo).ToList();
                     var invArticulosList = new List<SelectListItem>();
                     var invArticulos1 = _context.InvArticulos.Where(x => !entradasModels.Contains(x.ArtModelo)).ToList();
                     var invArticulos2 = _context.InvArticulos.Where(x => salidasModels.Contains(x.ArtModelo)).ToList();
@@ -212,7 +215,7 @@ namespace tienda_web.Controllers
                             {
                                 if (elemento.CantidadPrestada > 0)
                                 {
-                                    invArticulosList.Add(new SelectListItem() { Text = elemento.ArtModelo, Value = elemento.ArtModelo + " " + articulo.ArtNombre });
+                                    invArticulosList.Add(new SelectListItem() {Text = elemento.ArtModelo, Value = elemento.ArtModelo + " " + articulo.ArtNombre});
                                 }
                             }
                         }
@@ -228,11 +231,11 @@ namespace tienda_web.Controllers
                 _context.SaveChanges();
                 ActualizaEntradaStock(entrada.ArtModelo, entrada.Cantidad);
                 RegistraBitacora("Salidas", "Inserción");
-                List<Entrada> entradas = _context.Entradas.Where(entradaOut => entradaOut.ProyectoId == entrada.ProyectoId).ToList();
+                List<Entrada> entradas = _context.Entradas
+                    .Where(entradaOut => entradaOut.ProyectoId == entrada.ProyectoId).ToList();
                 return View("Entradas/VerEntradas", entradas);
             }
-
-            return View("/Entradas/AgregarEntradas");
+            return View("Entradas/AgregarEntradas");
         }
 
         [Authorize]
