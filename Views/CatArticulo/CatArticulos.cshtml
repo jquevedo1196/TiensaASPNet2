@@ -14,6 +14,11 @@
     </div>
 </div>
 
+@if (TempData["Danger"] != null)
+{
+    <p class="alert alert-danger" id="dangerMessage">@TempData["Danger"]</p>
+}
+
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
