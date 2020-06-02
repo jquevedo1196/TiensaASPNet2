@@ -36,8 +36,19 @@ namespace tienda_web.Controllers
             {
                 if (_context.CatArticulos.Find(catArticuloId) != null)
                 {
+                    var registrado = _context.InvArticulos
+                        .Where(x => x.ArtId == catArticuloId)
+                        .Select(x => x.ArtId)
+                        .ToArray();
+                    if (registrado.Length != 0)
+                    {
+                        TempData["Danger"] = $"No se puede eliminar un artículo que ya está en el Inventario.";
+                        return View("CatArticulos", _context.CatArticulos.ToList());
+                    }
+                    
                     _context.CatArticulos.Remove(_context.CatArticulos.Find(catArticuloId));
                     _context.SaveChanges();
+                    return View("CatArticulos", _context.CatArticulos.ToList());
                 }
             }
             RegistraBitacora("CatArticulos", "Borrado");
