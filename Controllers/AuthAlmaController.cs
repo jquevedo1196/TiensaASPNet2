@@ -43,7 +43,7 @@ namespace tienda_web.Controllers
             proyecto.AuthSalida = "SI";
             _context.Proyectos.Update(proyecto);
             _context.SaveChanges();
-            TempData["Success"] = $"Salida autorizada para el proyecto {proyecto.ProyectoName}!";
+            TempData["Autorizacion"] = $"Salida autorizada para el proyecto {proyecto.ProyectoName}!";
 
             return View("Informacion", _context.Proyectos.ToList());
         }
@@ -57,7 +57,7 @@ namespace tienda_web.Controllers
             proyecto.AuthEntrada = "SI";
             _context.Proyectos.Update(proyecto);
             _context.SaveChanges();
-            TempData["Success"] = $"Entrada autorizada para el proyecto {proyecto.ProyectoName}!";
+            TempData["Autorizacion"] = $"Entrada autorizada para el proyecto {proyecto.ProyectoName}!";
 
             return View("Informacion", _context.Proyectos.ToList());
         }

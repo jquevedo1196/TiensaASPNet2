@@ -57,6 +57,7 @@ namespace tienda_web.Controllers
                 if (result.Succeeded)
                 {
                     RegistraBitacora("AspNetRoles", "Inserción");
+                    TempData["RolCreado"] = $"Los roles han sido modificados con exito!\nPor favor reinicia la sesión del usuario en cuestión para aplicar los ajustes.";
                     return RedirectToAction("Roles", "RolesUsuario");                                        
                 }
 
@@ -65,7 +66,7 @@ namespace tienda_web.Controllers
                     ModelState.AddModelError("", error.Description);
                 }
             }
-
+            
             return View(model);
         }
 
@@ -80,7 +81,7 @@ namespace tienda_web.Controllers
 
             if (role == null)
             {
-                TempData["Danger"] = $"No se encontró el Rol especificado";
+                TempData["NoRol"] = $"No se encontró el Rol especificado";
                 return View("Roles");
             }
             else
@@ -108,7 +109,7 @@ namespace tienda_web.Controllers
                     model.Add(rol);
                     RegistraBitacora("AspNetRoles", "Consulta");
                 }
-
+                
                 return View(model);
             }
         }
@@ -121,11 +122,13 @@ namespace tienda_web.Controllers
 
             if (role == null)
             {
-                TempData["Danger"] = $"No se encontró el Rol especificado";
+                TempData["NoRol"] = $"No se encontró el Rol especificado";
                 return View("Roles");
             }
 
-            for (int i =0; i < model.Count; i++)
+            int count = 0;
+            
+            for (int i = 0; i < model.Count; i++)
             {
                 var user = await userManager.FindByIdAsync(model[i].UserId);
 
@@ -134,10 +137,12 @@ namespace tienda_web.Controllers
                 if (model[i].IsSelected && !(await userManager.IsInRoleAsync(user, role.Name)))
                 {
                     result = await userManager.AddToRoleAsync(user, role.Name);
+                    count++;
                 }
                 else if(!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
                 {
                     result = await userManager.RemoveFromRoleAsync(user, role.Name);
+                    count++;
                 }
                 else
                 {
@@ -146,17 +151,19 @@ namespace tienda_web.Controllers
 
                 if (result.Succeeded)
                 {
+                    // count++;
+                    RegistraBitacora("AspNetUserRoles", "Inserción");
                     if (i < (model.Count - 1))
                     {
-                        RegistraBitacora("AspNetRoles", "Inserción");
                         continue;
                     }
-                    else
-                        TempData["Success"] = "Los roles han sido modificados con exito!\nPor favor reinicia la sesión del usuario en cuestión para aplicar los ajustes!";
+                    TempData["RolModificado"] = $"Los roles han sido modificados con exito!\nPor favor reinicia la sesión del usuario en cuestión para aplicar los ajustes.";
                     return RedirectToAction("Roles", "RolesUsuario");
                 }
             }
-
+            
+            if (count > 0)
+                TempData["RolModificado"] = $"Los roles han sido modificados con exito!\nPor favor reinicia la sesión del usuario en cuestión para aplicar los ajustes.";
             return RedirectToAction("Roles", "RolesUsuario");
         }
 

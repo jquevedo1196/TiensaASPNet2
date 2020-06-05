@@ -11,9 +11,12 @@
 
 <h2>Autorización de Salidas/Entradas del Almacén</h2>
 
-@if (TempData["Success"] != null)
+@if (TempData["Autorizacion"] != null)
 {
-    <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
+    <div id="AutorizaMessage" class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        @TempData["Autorizacion"]
+    </div>
 }
 
 <div class="table-responsive">

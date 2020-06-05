@@ -3,9 +3,26 @@
     ViewData["Title"] = "Silo Manager";
 }
 
-@if (TempData["Danger"] != null)
+@if (TempData["NoRol"] != null)
 {
-    <p class="alert alert-danger" id="dangerMessage">@TempData["Danger"]</p>
+    <div id="NoRolMessage" class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        @TempData["NoRol"]
+    </div>
+}
+
+@if (TempData["RolCreado"] != null)
+{
+    <div id="RolCreaMessage" class="alert alert-success alert-dismissible fade show">
+        @TempData["RolCreado"]
+    </div>
+}
+
+@if (TempData["RolModificado"] != null)
+{
+    <div id="RolModMessage" class="alert alert-success alert-dismissible fade show">
+        @TempData["RolModificado"]
+    </div>
 }
 
 <div style="width: 100%; padding-bottom: 20px">

@@ -42,7 +42,7 @@ namespace tienda_web.Controllers
                         .ToArray();
                     if (registrado.Length != 0)
                     {
-                        TempData["Danger"] = $"No se puede eliminar un artículo que ya está en el Inventario.";
+                        TempData["EliminaUsuario"] = $"No se puede eliminar un artículo que ya está en el Inventario.";
                         return View("CatArticulos", _context.CatArticulos.ToList());
                     }
                     

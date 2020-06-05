@@ -275,7 +275,7 @@ namespace tienda_web.Controllers
             string pathdb = _context.Parametros.FirstOrDefault(parametro => parametro.VcParamName == "PathBuildPdf")?.VcParamValue;
             ViewBag.Context = _context;
             GeneratePdfFile(proyectoId, "Salida", pathdb);
-            TempData["Success"] = $"Archivo generado correctamente en la ruta {pathdb}!";
+            TempData["PDFGenerado"] = $"Archivo de reporte de salida generado correctamente en la ruta {pathdb}!";
             return View("Informacion", _context.Proyectos.ToList());
         }
 
@@ -286,7 +286,7 @@ namespace tienda_web.Controllers
             string pathdb = _context.Parametros.FirstOrDefault(parametro => parametro.VcParamName == "PathBuildPdf")?.VcParamValue;
             ViewBag.Context = _context;
             GeneratePdfFile(proyectoId, "Entrada", pathdb);
-            TempData["Success"] = $"Archivo generado correctamente en la ruta {pathdb}!";
+            TempData["PDFGenerado"] = $"Archivo de reporte de entrada generado correctamente en la ruta {pathdb}!";
             return View("Informacion", _context.Proyectos.ToList());
         }
 

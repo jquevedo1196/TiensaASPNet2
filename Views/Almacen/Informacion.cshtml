@@ -5,9 +5,12 @@
 
 <h2>Proyectos</h2>
 
-@if (TempData["Success"] != null)
+@if (TempData["PDFGenerado"] != null)
 {
-    <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
+    <div id="PDFGenMessage" class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        @TempData["PDFGenerado"]
+    </div>
 }
 
 <div class="table-responsive">

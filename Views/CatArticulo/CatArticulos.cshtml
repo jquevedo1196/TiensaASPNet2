@@ -14,9 +14,12 @@
     </div>
 </div>
 
-@if (TempData["Danger"] != null)
+@if (TempData["EliminaUsuario"] != null)
 {
-    <p class="alert alert-danger" id="dangerMessage">@TempData["Danger"]</p>
+    <div id="ElimUsMessage" class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        @TempData["EliminaUsuario"]
+    </div>
 }
 
 <div class="table-responsive">
@@ -46,3 +49,7 @@
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript">
+    $('#ElimUsMessage').delay(3000).fadeOut();
+</script>
